@@ -10,5 +10,11 @@
   "license": "ISC",
   "dependencies": {
     "koa": "^2.13.4"
+  },
+  "devDependencies": {
+    "eslint": "^8.10.0",
+    "eslint-config-prettier": "^8.4.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "prettier": "^2.5.1"
   }
 }
