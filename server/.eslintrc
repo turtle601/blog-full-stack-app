@@ -1,0 +1,34 @@
+{
+  "env": {
+    "commonjs": true,
+    // 브라우저의 document와 같은 객체 사용 여부
+    "es6": false,
+    // node.js에서 console과 같은 전역변수 사용 여부
+    "node": true
+  },
+  // 코드 포맷을 prettier로 설정
+  "plugins": ["prettier"],
+
+  // eslint의 룰을 기본 권장설정으로 설정
+  "extends": ["eslint:recommended", "plugin:prettier/recommended"],
+
+  "globals": {
+    // 선언되지 않는 전역변수 사용 시 eslint 에러 발생 x
+    "Atomics": "readonly",
+    "SharedArrayBuffer": "readonly"
+  },
+
+  // 코드를 해석하는 parser에 대한 설정
+  "parserOptions": {
+    // 자바스크립트 버전, 7은 ECMA2016
+    "ecmaVersion": 2018,
+    // 모듈 export를 위해 import, export를 사용 가능여부를 설정, script는 사용불가, module은 사용 가능
+    "sourceType": "module"
+  },
+
+  // ESLint 룰을 설정
+  "rules": {
+    "no-unused-vars": "warn",
+    "no-console": "off"
+  }
+}
