@@ -16,8 +16,18 @@ export const write = async ctx => {
 };
 
 // GET api/posts/{postId}
-export const read = ctx => {
-  ctx.body = 'read';
+export const read = async ctx => {
+  const { postId } = ctx.params;
+  try {
+    const post = await Post.findById(postId).exec();
+    if (!post) {
+      ctx.status = 404; // Not Found
+      return;
+    }
+    ctx.body = post;
+  } catch (e) {
+    ctx.throw(500, e);
+  }
 };
 
 // DELETE api/posts/{postId}
