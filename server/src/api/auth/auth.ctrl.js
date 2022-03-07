@@ -1,8 +1,17 @@
 import { checkRegisterUser } from '../../lib/joi/checkReqPost';
 import User from '../../models/users';
 
-export const check = ctx => {};
+// 로그인 여부 확인
+export const check = ctx => {
+  const { user } = ctx.state;
+  if (!user) {
+    ctx.status = 401; //Unauthorized
+    return;
+  }
+  ctx.body = user;
+};
 
+// 회원 등록
 export const register = async ctx => {
   const schema = checkRegisterUser();
   const result = schema.validate(ctx.request.body);
@@ -29,11 +38,18 @@ export const register = async ctx => {
     await user.save(); // 데이터 베이스 저장
 
     ctx.body = user.serialize();
+
+    const token = user.generateToken();
+    ctx.cookies.set('access_token', token, {
+      maxAge: 1000 * 60 * 60 * 24 * 7,
+      httpOnly: true,
+    });
   } catch (e) {
     ctx.throw(500, e);
   }
 };
 
+// 로그인
 export const login = async ctx => {
   const { username, password } = ctx.request.body;
 
@@ -50,14 +66,19 @@ export const login = async ctx => {
     }
 
     const valid = await user.checkPassword(password);
-    console.log(valid);
+
     if (!valid) {
-      console.log(3);
       ctx.status = 401;
       return;
     }
 
     ctx.body = user.serialize();
+
+    const token = user.generateToken();
+    ctx.cookies.set('access_token', token, {
+      maxAge: 1000 * 60 * 60 * 24 * 7,
+      httpOnly: true,
+    });
   } catch (e) {
     ctx.throw(500, e);
   }

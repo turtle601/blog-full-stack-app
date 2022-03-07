@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 
 const { Schema } = mongoose;
 
@@ -7,6 +8,20 @@ const UserSchema = new Schema({
   username: String,
   hashedPassword: String,
 });
+
+UserSchema.methods.generateToken = function () {
+  const token = jwt.sign(
+    {
+      _id: this._id,
+      username: this.username,
+    },
+    process.env.JWT_SECRET,
+    {
+      expiresIn: '7d',
+    },
+  );
+  return token;
+};
 
 UserSchema.methods.setPassword = async function (password) {
   const hash = await bcrypt.hash(password, 10);
