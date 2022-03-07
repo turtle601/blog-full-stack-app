@@ -1,15 +1,15 @@
-import Joi from 'joi';
 import mongoose from 'mongoose';
 
 import Post from '../../models/users';
+import { checkReqPosts, checkReqUpdatePost } from '../../lib/joi/checkReqPost';
 
 const { ObjectId } = mongoose.Types;
 
-// postId 검증
-export const checkPostId = async (ctx, next) => {
-  const { postId } = ctx.params;
-  if (!ObjectId.isValid(postId)) {
-    ctx.status = 400;
+// id 검증
+export const checkPostId = (ctx, next) => {
+  const { id } = ctx.params;
+  if (!ObjectId.isValid(id)) {
+    ctx.status = 400; //Bad Request
     return;
   }
 
@@ -28,13 +28,7 @@ export const list = async ctx => {
 
 // POST api/posts
 export const write = async ctx => {
-  // 검증할 스키마 객체 생성
-  const schema = Joi.object().keys({
-    // 객체가 다음 필드를 가지고 있음을 검증
-    title: Joi.string().required(),
-    body: Joi.string().required(),
-    tags: Joi.array().items(Joi.string()).required(), // 문자열로 이루어짐
-  });
+  const schema = checkReqPosts();
 
   const result = schema.validate(ctx.request.body);
 
@@ -58,11 +52,11 @@ export const write = async ctx => {
   }
 };
 
-// GET api/posts/{postId}
+// GET api/posts/{id}
 export const read = async ctx => {
-  const { postId } = ctx.params;
+  const { id } = ctx.params;
   try {
-    const post = await Post.findById(postId).exec();
+    const post = await Post.findById(id).exec();
     if (!post) {
       ctx.status = 404; // Not Found
       return;
@@ -73,12 +67,43 @@ export const read = async ctx => {
   }
 };
 
-// DELETE api/posts/{postId}
-export const remove = ctx => {
-  ctx.body = 'remove';
+// DELETE api/posts/{id}
+export const remove = async ctx => {
+  const { id } = ctx.params;
+
+  try {
+    await Post.findByIdAndDelete(id).exec();
+    ctx.status = 204; // No Content
+  } catch (e) {
+    ctx.throw(500, e);
+  }
 };
 
-// PATCH api/posts/{postid}
-export const patch = ctx => {
-  ctx.body = 'patch';
+// PATCH api/posts/{id}
+export const update = async ctx => {
+  const { id } = ctx.params;
+
+  const schema = checkReqUpdatePost();
+
+  const result = schema.validate(ctx.request.body);
+
+  if (result.error) {
+    ctx.body = result.error;
+    ctx.status = 400;
+    return;
+  }
+  try {
+    const post = await Post.findByIdAndUpdate(id, ctx.request.body, {
+      new: true,
+    }).exec();
+
+    if (!post) {
+      ctx.status = 404;
+      return;
+    }
+
+    ctx.body = post;
+  } catch (e) {
+    ctx.throw(500, e);
+  }
 };

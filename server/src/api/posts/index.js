@@ -11,6 +11,6 @@ posts.get('/:id', postCtrl.checkPostId, postCtrl.read);
 
 posts.delete('/:id', postCtrl.checkPostId, postCtrl.remove);
 
-posts.patch('/:id', postCtrl.checkPostId, postCtrl.patch);
+posts.patch('/:id', postCtrl.checkPostId, postCtrl.update);
 
 export default posts;
