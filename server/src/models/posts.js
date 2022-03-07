@@ -2,11 +2,16 @@ import mongoose from 'mongoose';
 
 const { Schema } = mongoose;
 
-const UserSchema = new Schema({
-  username: String,
-  hashedPassword: String,
+const PostSchema = new Schema({
+  title: String,
+  body: String,
+  tags: [String],
+  publishedDate: {
+    type: Date,
+    default: Date.now(),
+  },
 });
 
-const User = mongoose.model('User', UserSchema);
+const Post = mongoose.model('POST', PostSchema);
 
-export default User;
+export default Post;

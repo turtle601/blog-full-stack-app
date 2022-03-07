@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-import Post from '../../models/users';
+import Post from '../../models/posts';
 import { checkReqPosts, checkReqUpdatePost } from '../../lib/joi/checkReqPost';
 
 const { ObjectId } = mongoose.Types;

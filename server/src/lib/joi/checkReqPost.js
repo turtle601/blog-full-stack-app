@@ -1,5 +1,6 @@
 import Joi from 'joi';
 
+// 포스트 작성 시
 export const checkReqPosts = () => {
   const schema = Joi.object().keys({
     // 객체가 다음 필드를 가지고 있음을 검증
@@ -11,6 +12,7 @@ export const checkReqPosts = () => {
   return schema;
 };
 
+// 포스트 수정 시
 export const checkReqUpdatePost = () => {
   const schema = Joi.object().keys({
     // 객체가 다음 필드를 가지고 있음을 검증
@@ -21,4 +23,13 @@ export const checkReqUpdatePost = () => {
 
   return schema;
 };
-// 검증할 스키마 객체 생성
+
+// register
+export const checkRegisterUser = () => {
+  const schema = Joi.object().keys({
+    username: Joi.string().alphanum().min(3).max(20).required(),
+    password: Joi.string().required(),
+  });
+
+  return schema;
+};
