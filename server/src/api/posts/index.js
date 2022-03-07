@@ -7,10 +7,10 @@ posts.get('/', postCtrl.list);
 
 posts.post('/', postCtrl.write);
 
-posts.get('/:id', postCtrl.read);
+posts.get('/:id', postCtrl.checkPostId, postCtrl.read);
 
-posts.delete('/:id', postCtrl.remove);
+posts.delete('/:id', postCtrl.checkPostId, postCtrl.remove);
 
-posts.patch('/:id', postCtrl.patch);
+posts.patch('/:id', postCtrl.checkPostId, postCtrl.patch);
 
 export default posts;
