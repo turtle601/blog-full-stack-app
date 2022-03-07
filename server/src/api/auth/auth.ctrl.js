@@ -85,5 +85,6 @@ export const login = async ctx => {
 };
 
 export const logout = ctx => {
-  ctx.body = 'logout';
+  ctx.cookies.set('access_token');
+  ctx.staus = 204; // No Content
 };
