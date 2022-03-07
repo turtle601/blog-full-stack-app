@@ -5,6 +5,8 @@ import Router from 'koa-router';
 import bodyParser from 'koa-bodyparser';
 import mongoose from 'mongoose';
 
+import api from './api/index';
+
 const { PORT, MONGO_URI } = process.env;
 
 const port = PORT || 4000;
@@ -23,9 +25,7 @@ mongoose
 const app = new Koa();
 const router = new Router();
 
-app.use(ctx => {
-  ctx.body = 'hello world';
-});
+router.use('/api', api.routes());
 
 app.use(bodyParser());
 
