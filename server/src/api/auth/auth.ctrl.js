@@ -86,5 +86,5 @@ export const login = async ctx => {
 
 export const logout = ctx => {
   ctx.cookies.set('access_token');
-  ctx.staus = 204; // No Content
+  ctx.status = 204; // No Content
 };

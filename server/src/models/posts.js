@@ -6,6 +6,10 @@ const PostSchema = new Schema({
   title: String,
   body: String,
   tags: [String],
+  user: {
+    _id: mongoose.Types.ObjectId,
+    username: String,
+  },
   publishedDate: {
     type: Date,
     default: Date.now(),
