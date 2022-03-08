@@ -46,19 +46,23 @@ export const checkOwnPost = (ctx, next) => {
 
 // GET api/posts
 export const list = async ctx => {
-  // const { tag, username } = ctx.query;
+  const { tag, username } = ctx.query;
+  const query = {
+    ...(username ? { 'user.username': username } : {}),
+    ...(tag ? { tags: tag } : {}),
+  };
 
   const page = parseInt(ctx.query.page || '1', 10);
 
   try {
-    const posts = await Post.find()
+    const posts = await Post.find(query)
       .sort({ _id: -1 })
       .limit(10)
       .skip((page - 1) * 10)
       .lean()
       .exec();
 
-    const postCount = await Post.countDocuments().exec();
+    const postCount = await Post.countDocuments(query).exec();
     ctx.set('Last-page', Math.ceil(postCount / 10));
     ctx.body = posts.map(post => ({
       ...post,
