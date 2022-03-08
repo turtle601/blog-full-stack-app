@@ -1,0 +1,33 @@
+{
+  "env": {
+    "browser": true,
+    "es2021": true,
+    "jest": true
+  },
+  // 코드 포맷을 prettier로 설정
+  "plugins": ["prettier"],
+
+  // eslint의 룰을 기본 권장설정으로 설정
+  "extends": [
+    "prettier",
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:prettier/recommended"
+  ],
+
+  "parserOptions": {
+    "ecmaVersion": 2021,
+    "sourceType": "module"
+  },
+
+  // ESLint 룰을 설정
+  "rules": {
+    "no-unused-vars": "warn",
+    "no-console": "off",
+    "react/prop-types": 0,
+    "react/jsx-uses-react": "off",
+    "react/react-in-jsx-scope": "off",
+    "react/jsx-props-no-spreading": "off",
+    "react/jsx-filename-extension": [2, { "extensions": [".js", ".jsx"] }]
+  }
+}
