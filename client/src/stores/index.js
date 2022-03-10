@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
-import sample from './sample';
+import darkReducer from './dark';
 
 const rootReducer = combineReducers({
-  sample,
+  darkReducer,
 });
 
 export default rootReducer;
