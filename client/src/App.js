@@ -1,16 +1,30 @@
+// react 관련 라이브러리
 import React from 'react';
 
-import { GlobalStyle } from './styles/global';
+// react-router 관련 라이브러리
+import { Route, Routes } from 'react-router-dom';
+
+// styled-components 관련 라이브러리
 import { ThemeProvider } from 'styled-components';
+
+// style 관련
+import { GlobalStyle } from './styles/global';
 import { darkTheme, lightTheme } from './styles/theme';
+
+// hook 관련
 import { useDarkMode } from './hooks/useDarkMode';
+
+// page 관련
+import Home from './pages/Home';
 
 const App = () => {
   const [darkMode, setDarkMode] = useDarkMode();
   return (
     <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
       <GlobalStyle />
-      <button onClick={setDarkMode}>테스트</button>
+      <Routes>
+        <Route path="/" element={<Home />} />
+      </Routes>
     </ThemeProvider>
   );
 };
