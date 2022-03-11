@@ -16,6 +16,7 @@ import { useDarkMode } from './hooks/useDarkMode';
 
 // page 관련
 import Home from './pages/Home';
+import RegisterPage from './pages/RegisterPage';
 
 const App = () => {
   const [darkMode, setDarkMode] = useDarkMode();
@@ -24,6 +25,7 @@ const App = () => {
       <GlobalStyle />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/register" element={<RegisterPage />} />
       </Routes>
     </ThemeProvider>
   );
