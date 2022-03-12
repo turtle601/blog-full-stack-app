@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 // 리액트 라우터 관련 라이브러리
 import { Link } from 'react-router-dom';
@@ -9,6 +9,9 @@ import styled, { css } from 'styled-components';
 // custom 컴포넌트
 import { Button } from '../../customs/button';
 import { Input } from '../../customs/input';
+
+// hooks 가져오기
+import { useChangeField, useInitializeForm } from '../../hooks/auth';
 
 const ButtonMarginTop = styled(Button)`
   ${({ theme }) => {
@@ -42,22 +45,52 @@ const authType = {
 };
 
 const AuthForm = ({ type }) => {
+  const [field, setField] = useChangeField(type);
+  const [choiceField, resetField] = useInitializeForm(type);
+
+  useEffect(() => {
+    resetField();
+  }, []);
+
+  const onSubmit = e => {
+    e.preventDefault();
+  };
+
+  const onChange = e => {
+    const { name, value } = e.target;
+    setField(name, value);
+  };
+
   return (
-    <form>
+    <form onSubmit={onSubmit}>
       <Title>{authType[type]}</Title>
-      {type === 'login' && (
-        <>
-          <Input underline type="text" placeholder="아이디" />
-          <Input underline type="text" placeholder="비밀번호" />
-        </>
-      )}
+
+      <Input
+        underline
+        name="username"
+        type="text"
+        placeholder="아이디"
+        onChange={onChange}
+        value={field.username || ''}
+      />
+      <Input
+        underline
+        name="password"
+        type="password"
+        placeholder="비밀번호"
+        onChange={onChange}
+        value={field.password || ''}
+      />
 
       {type == 'register' && (
-        <>
-          <Input underline type="text" placeholder="아이디" />
-          <Input underline type="text" placeholder="비밀번호" />
-          <Input underline type="text" placeholder="비밀번호 확인" />
-        </>
+        <Input
+          underline
+          name="passwordConfirm"
+          type="password"
+          placeholder="비밀번호 확인"
+          onChange={onChange}
+          value={field.passwordConfirm || ''}
+        />
       )}
 
       <ButtonMarginTop fullWidth cyan>

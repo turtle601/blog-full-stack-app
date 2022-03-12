@@ -38,12 +38,18 @@ const initialState = Map({
 const authReducer = handleActions(
   {
     [CHANGE_FIELD]: (state, { payload: { form, key, value } }) => {
-      state.set([form, key], value);
+      return state.setIn([form, key], value);
     },
-    [INITIALIZE_FORM]: (state, { payload: form }) => ({
-      ...state,
-      [form]: initialState[form],
-    }),
+    [INITIALIZE_FORM]: (state, { payload: form }) => {
+      if (form === 'login') {
+        return state.set(form, Map({ username: '', password: '' }));
+      }
+
+      return state.set(
+        form,
+        Map({ username: '', password: '', passwordConfirm: '' }),
+      );
+    },
   },
   initialState,
 );
