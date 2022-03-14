@@ -11,7 +11,12 @@ import { Button } from '../../customs/button';
 import { Input } from '../../customs/input';
 
 // hooks 가져오기
-import { useChangeField, useInitializeForm } from '../../hooks/auth';
+import {
+  useChangeField,
+  useInitializeForm,
+  useSetRegister,
+} from '../../hooks/auth';
+import { useUserCheck } from '../../hooks/user';
 
 const ButtonMarginTop = styled(Button)`
   ${({ theme }) => {
@@ -45,15 +50,47 @@ const authType = {
 };
 
 const AuthForm = ({ type }) => {
-  const [field, setField] = useChangeField(type);
+  const [{ form, auth, authError }, setField] = useChangeField(type);
   const [choiceField, resetField] = useInitializeForm(type);
 
+  const setRegister = useSetRegister(type);
+  const [user, setUserCheck] = useUserCheck();
+
+  // 컴포넌트가 처음 렌더링될 때 form을 초기화함
   useEffect(() => {
     resetField();
   }, []);
 
+  // 회원가입 성공/실패 처리
+  useEffect(() => {
+    if (authError) {
+      console.log('오류 발생');
+      console.log(authError);
+      return;
+    }
+    if (auth) {
+      console.log('회원가입 성공');
+      console.log(auth);
+      setUserCheck();
+    }
+  }, [auth, authError]);
+
+  useEffect(() => {
+    if (user) {
+      console.log('check API 성공');
+      console.log(user);
+    }
+  }, [user]);
+
   const onSubmit = e => {
     e.preventDefault();
+    const { username, password, passwordConfirm } = form;
+    if (password !== passwordConfirm) {
+      // 오류 처리
+      return;
+    }
+
+    setRegister(username, password);
   };
 
   const onChange = e => {
@@ -71,7 +108,7 @@ const AuthForm = ({ type }) => {
         type="text"
         placeholder="아이디"
         onChange={onChange}
-        value={field.username || ''}
+        value={form.username || ''}
       />
       <Input
         underline
@@ -79,7 +116,7 @@ const AuthForm = ({ type }) => {
         type="password"
         placeholder="비밀번호"
         onChange={onChange}
-        value={field.password || ''}
+        value={form.password || ''}
       />
 
       {type == 'register' && (
@@ -89,7 +126,7 @@ const AuthForm = ({ type }) => {
           type="password"
           placeholder="비밀번호 확인"
           onChange={onChange}
-          value={field.passwordConfirm || ''}
+          value={form.passwordConfirm || ''}
         />
       )}
 
