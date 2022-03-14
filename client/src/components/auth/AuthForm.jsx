@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 
 // 리액트 라우터 관련 라이브러리
 import { Link } from 'react-router-dom';
@@ -17,7 +16,7 @@ import {
   useInitializeForm,
   useSetRegister,
 } from '../../hooks/auth';
-import { register } from '../../stores/auth';
+import { useUserCheck } from '../../hooks/user';
 
 const ButtonMarginTop = styled(Button)`
   ${({ theme }) => {
@@ -53,18 +52,39 @@ const authType = {
 const AuthForm = ({ type }) => {
   const [{ form, auth, authError }, setField] = useChangeField(type);
   const [choiceField, resetField] = useInitializeForm(type);
+
   const setRegister = useSetRegister(type);
+  const [user, setUserCheck] = useUserCheck();
 
-  // const dispatch = useDispatch();
-
+  // 컴포넌트가 처음 렌더링될 때 form을 초기화함
   useEffect(() => {
     resetField();
   }, []);
 
+  // 회원가입 성공/실패 처리
+  useEffect(() => {
+    if (authError) {
+      console.log('오류 발생');
+      console.log(authError);
+      return;
+    }
+    if (auth) {
+      console.log('회원가입 성공');
+      console.log(auth);
+      setUserCheck();
+    }
+  }, [auth, authError]);
+
+  useEffect(() => {
+    if (user) {
+      console.log('check API 성공');
+      console.log(user);
+    }
+  }, [user]);
+
   const onSubmit = e => {
     e.preventDefault();
     const { username, password, passwordConfirm } = form;
-    console.log(username, password, passwordConfirm);
     if (password !== passwordConfirm) {
       // 오류 처리
       return;
