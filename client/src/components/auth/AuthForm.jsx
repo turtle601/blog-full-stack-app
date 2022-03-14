@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 
 // 리액트 라우터 관련 라이브러리
 import { Link } from 'react-router-dom';
@@ -11,7 +12,12 @@ import { Button } from '../../customs/button';
 import { Input } from '../../customs/input';
 
 // hooks 가져오기
-import { useChangeField, useInitializeForm } from '../../hooks/auth';
+import {
+  useChangeField,
+  useInitializeForm,
+  useSetRegister,
+} from '../../hooks/auth';
+import { register } from '../../stores/auth';
 
 const ButtonMarginTop = styled(Button)`
   ${({ theme }) => {
@@ -45,8 +51,11 @@ const authType = {
 };
 
 const AuthForm = ({ type }) => {
-  const [field, setField] = useChangeField(type);
+  const [{ form, auth, authError }, setField] = useChangeField(type);
   const [choiceField, resetField] = useInitializeForm(type);
+  const setRegister = useSetRegister(type);
+
+  // const dispatch = useDispatch();
 
   useEffect(() => {
     resetField();
@@ -54,6 +63,14 @@ const AuthForm = ({ type }) => {
 
   const onSubmit = e => {
     e.preventDefault();
+    const { username, password, passwordConfirm } = form;
+    console.log(username, password, passwordConfirm);
+    if (password !== passwordConfirm) {
+      // 오류 처리
+      return;
+    }
+
+    setRegister(username, password);
   };
 
   const onChange = e => {
@@ -71,7 +88,7 @@ const AuthForm = ({ type }) => {
         type="text"
         placeholder="아이디"
         onChange={onChange}
-        value={field.username || ''}
+        value={form.username || ''}
       />
       <Input
         underline
@@ -79,7 +96,7 @@ const AuthForm = ({ type }) => {
         type="password"
         placeholder="비밀번호"
         onChange={onChange}
-        value={field.password || ''}
+        value={form.password || ''}
       />
 
       {type == 'register' && (
@@ -89,7 +106,7 @@ const AuthForm = ({ type }) => {
           type="password"
           placeholder="비밀번호 확인"
           onChange={onChange}
-          value={field.passwordConfirm || ''}
+          value={form.passwordConfirm || ''}
         />
       )}
 
