@@ -25,7 +25,8 @@ export const register = async ctx => {
   const { username, password } = ctx.request.body;
 
   try {
-    const exists = User.findByUsername(username);
+    const exists = await User.findByUsername(username).exec();
+
     if (exists) {
       ctx.status = 409; // Conflict
       return;
