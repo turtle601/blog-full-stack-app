@@ -4,11 +4,13 @@ import { combineReducers } from 'redux';
 import darkReducer from './dark';
 import authReducer from './auth';
 import loadingReducer from './loading';
+import userReducer from './user';
 
 const rootReducer = combineReducers({
   darkReducer,
   authReducer,
   loadingReducer,
+  userReducer,
 });
 
 export default rootReducer;

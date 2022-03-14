@@ -18,7 +18,7 @@ const initialState = {};
 const loadingReducer = handleActions(
   {
     [START_LOADING]: (state, action) => {
-      console.log('loadingReducer에 대한 액션' + action); //
+      console.log('loadingReducer에 대한 액션' + JSON.stringify(action)); //
       return {
         ...state,
         [action.payload]: true,
