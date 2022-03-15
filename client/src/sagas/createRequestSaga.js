@@ -15,7 +15,6 @@ export default function createAPIRequestSaga(type, request) {
   return function* (action) {
     yield put(startLoading(type));
 
-    console.log(action.payload);
     try {
       const response = yield call(request, action.payload);
       yield put({
