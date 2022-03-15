@@ -13,7 +13,7 @@ const [REGISTER, REGISTER_SUCCESS, REGISTER_FAILURE] =
   createAPIRequestType('auth/REGISTER');
 
 const [LOGIN, LOGIN_SUCCESS, LOGIN_FAILURE] =
-  createAPIRequestType('auth/REGISTER');
+  createAPIRequestType('auth/LOGIN');
 
 // actions
 export const changeField = createAction(
