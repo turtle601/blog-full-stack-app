@@ -63,6 +63,7 @@ const AuthForm = ({ type }) => {
 
   // 회원가입 성공/실패 처리
   useEffect(() => {
+    console.log(2);
     if (authError) {
       console.log('오류 발생');
       console.log(authError);
@@ -76,6 +77,7 @@ const AuthForm = ({ type }) => {
   }, [auth, authError]);
 
   useEffect(() => {
+    console.log(3);
     if (user) {
       console.log('check API 성공');
       console.log(user);
@@ -95,6 +97,8 @@ const AuthForm = ({ type }) => {
 
   const onChange = e => {
     const { name, value } = e.target;
+    console.log(form);
+
     setField(name, value);
   };
 
@@ -108,7 +112,7 @@ const AuthForm = ({ type }) => {
         type="text"
         placeholder="아이디"
         onChange={onChange}
-        value={form.username || ''}
+        value={form.username}
       />
       <Input
         underline
@@ -116,7 +120,7 @@ const AuthForm = ({ type }) => {
         type="password"
         placeholder="비밀번호"
         onChange={onChange}
-        value={form.password || ''}
+        value={form.password}
       />
 
       {type == 'register' && (
@@ -126,7 +130,7 @@ const AuthForm = ({ type }) => {
           type="password"
           placeholder="비밀번호 확인"
           onChange={onChange}
-          value={form.passwordConfirm || ''}
+          value={form.passwordConfirm}
         />
       )}
 
