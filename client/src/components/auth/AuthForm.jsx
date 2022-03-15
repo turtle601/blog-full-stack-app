@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 
 // 리액트 라우터 관련 라이브러리
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 // style-component 라이브러리
 import styled, { css } from 'styled-components';
@@ -50,11 +50,17 @@ const authType = {
 };
 
 const AuthForm = ({ type }) => {
-  const [{ form, auth, authError }, setField] = useChangeField(type);
-  const [choiceField, resetField] = useInitializeForm(type);
+  const navigator = useNavigate();
 
-  const setRegister = useSetRegister(type);
+  // useChagneField = 입력 field 관련 hook
+  const [{ form, auth, authError }, setField] = useChangeField(type);
+  // useUserCheck = user 여부를 체크하는 hook
   const [user, setUserCheck] = useUserCheck();
+
+  // useInitializeForm = form 초기화 관련 hook
+  const [choiceField, resetField] = useInitializeForm(type);
+  // useSetRegister = 회원가입 관련 action hook
+  const setRegister = useSetRegister(type);
 
   // 컴포넌트가 처음 렌더링될 때 form을 초기화함
   useEffect(() => {
@@ -63,24 +69,20 @@ const AuthForm = ({ type }) => {
 
   // 회원가입 성공/실패 처리
   useEffect(() => {
-    console.log(2);
     if (authError) {
       console.log('오류 발생');
-      console.log(authError);
       return;
     }
     if (auth) {
       console.log('회원가입 성공');
-      console.log(auth);
       setUserCheck();
     }
   }, [auth, authError]);
 
   useEffect(() => {
-    console.log(3);
     if (user) {
       console.log('check API 성공');
-      console.log(user);
+      navigator('/');
     }
   }, [user]);
 
