@@ -14,7 +14,7 @@ import { Input } from '../../customs/input';
 import {
   useChangeField,
   useInitializeForm,
-  useSetRegister,
+  useSetAuth,
 } from '../../hooks/auth';
 import { useUserCheck } from '../../hooks/user';
 
@@ -60,7 +60,7 @@ const AuthForm = ({ type }) => {
   // useInitializeForm = form 초기화 관련 hook
   const [choiceField, resetField] = useInitializeForm(type);
   // useSetRegister = 회원가입 관련 action hook
-  const setRegister = useSetRegister(type);
+  const [setRegister, setLogin] = useSetAuth(type);
 
   // 컴포넌트가 처음 렌더링될 때 form을 초기화함
   useEffect(() => {
@@ -88,13 +88,20 @@ const AuthForm = ({ type }) => {
 
   const onSubmit = e => {
     e.preventDefault();
-    const { username, password, passwordConfirm } = form;
-    if (password !== passwordConfirm) {
-      // 오류 처리
-      return;
+    console.log(type);
+    if (type === 'register') {
+      const { username, password, passwordConfirm } = form;
+      console.log('register');
+      if (password !== passwordConfirm) {
+        // 오류 처리
+        return;
+      }
+      setRegister(username, password);
+    } else if (type === 'login') {
+      console.log('login');
+      const { username, password } = form;
+      setLogin(username, password);
     }
-
-    setRegister(username, password);
   };
 
   const onChange = e => {

@@ -2,7 +2,7 @@ import React from 'react';
 
 import { useSelector, useDispatch } from 'react-redux';
 
-import { changeField, initializeForm, register } from '../stores/auth';
+import { changeField, initializeForm, login, register } from '../stores/auth';
 
 // 로그인 or 회원가입 input value 변경 함수
 export const useChangeField = form => {
@@ -42,8 +42,8 @@ export const useInitializeForm = form => {
   return [field, resetField];
 };
 
-// 회원가입하는 함수
-export const useSetRegister = form => {
+// 회원가입 or 로그인하는 함수
+export const useSetAuth = form => {
   const field = useSelector(({ authReducer }) => {
     return {
       form: authReducer[form],
@@ -58,5 +58,10 @@ export const useSetRegister = form => {
     dispatch(register({ username, password }));
   };
 
-  return setRegister;
+  const setLogin = (username, password) => {
+    console.log('login');
+    dispatch(login({ username, password }));
+  };
+
+  return [setRegister, setLogin];
 };
