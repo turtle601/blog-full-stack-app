@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 // 리액트 라우터 관련 라이브러리
 import { Link, useNavigate } from 'react-router-dom';
@@ -8,6 +8,7 @@ import styled, { css } from 'styled-components';
 
 // custom 컴포넌트
 import { Button } from '../../customs/button';
+import { ErrorMessage } from '../../customs/errorMessage';
 import { Input } from '../../customs/input';
 
 // hooks 가져오기
@@ -51,6 +52,7 @@ const authType = {
 
 const AuthForm = ({ type }) => {
   const navigator = useNavigate();
+  const [error, setError] = useState(null);
 
   // useChagneField = 입력 field 관련 hook
   const [{ form, auth, authError }, setField] = useChangeField(type);
@@ -67,47 +69,76 @@ const AuthForm = ({ type }) => {
     resetField();
   }, []);
 
-  // 회원가입 성공/실패 처리
+  // 에러 처리
+  // 1. 하나라도 비어있다면 에러
+  // 2. 비밀번호 일치 여부 에러  => 비밀번호 초기화 시켜주기
+  // 3. 409 에러
+  // 4. 기타 백엔드 에러
+
+  // 회원가입 or 로그인 성공/실패 처리
   useEffect(() => {
     if (authError) {
-      console.log('오류 발생');
+      if (authError.response.status === 400) {
+        // 올바른 username, password 방식이 아닐 경우 => 정규화 방식 필요 ??
+        setError('회원 가입 실패');
+        return;
+      }
+
+      // 409에러
+      if (authError.response.status === 409) {
+        setError('해당 이름의 유저가 존재합니다');
+        return;
+      }
+
+      // Unauthorized
+      if (authError.response.status === 401) {
+        // user가 DB에 존재하지 않을 경우
+        // 해당 유저가 없거나 비밀번호가 틀렸을 때
+        setError('로그인 실패');
+        return;
+      }
+
+      // 기타 이유
+      setError('서버에 문제가 있습니다.');
       return;
     }
     if (auth) {
-      console.log('회원가입 성공');
       setUserCheck();
     }
   }, [auth, authError]);
 
   useEffect(() => {
     if (user) {
-      console.log('check API 성공');
       navigator('/');
     }
   }, [user]);
 
   const onSubmit = e => {
     e.preventDefault();
-    console.log(type);
+
+    if (Object.values(form).includes('')) {
+      setError('빈 칸을 모두 입력하세요.');
+      return;
+    }
+
     if (type === 'register') {
       const { username, password, passwordConfirm } = form;
-      console.log('register');
       if (password !== passwordConfirm) {
-        // 오류 처리
+        setError('비밀번호를 다시 확인해주세요');
+        setField('password', '');
+        setField('passwordConfirm', '');
         return;
       }
       setRegister(username, password);
     } else if (type === 'login') {
-      console.log('login');
       const { username, password } = form;
       setLogin(username, password);
+      return;
     }
   };
 
   const onChange = e => {
     const { name, value } = e.target;
-    console.log(form);
-
     setField(name, value);
   };
 
@@ -142,6 +173,8 @@ const AuthForm = ({ type }) => {
           value={form.passwordConfirm}
         />
       )}
+
+      {error && <ErrorMessage>{error}</ErrorMessage>}
 
       <ButtonMarginTop fullWidth cyan>
         {authType[type]}
