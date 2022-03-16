@@ -7,9 +7,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 
 // custom 컴포넌트
-import { Button } from '../../customs/button';
-import { ErrorMessage } from '../../customs/errorMessage';
-import { Input } from '../../customs/input';
+import Button from '../common/Button';
+import Input from '../common/Input';
+import ErrorMessage from '../common/ErrorMessage';
 
 // hooks 가져오기
 import {
@@ -18,6 +18,22 @@ import {
   useSetAuth,
 } from '../../hooks/auth';
 import { useUserCheck } from '../../hooks/user';
+
+// import { Center } from '../../layout/flexbox';
+
+// export const ErrorMessage = styled(Center)`
+//   background: none;
+//   border: none;
+//   outline: none;
+
+//   ${({ theme }) => {
+//     return css`
+//       font-weight: ${theme.fontSizes.bold};
+//       color: ${theme.color.red[400]};
+//       padding: ${theme.space[4]};
+//     `;
+//   }}
+// `;
 
 const ButtonMarginTop = styled(Button)`
   ${({ theme }) => {

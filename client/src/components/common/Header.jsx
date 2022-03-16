@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 
 // 컴포넌트
 import Responsive from './Responsive';
-import { Button } from '../../customs/button';
+import Button from './Button';
 
 const HeaderBlock = styled.header`
   display: flex;
@@ -55,7 +55,9 @@ const Header = () => {
         <Wrapper>
           <HeaderLogo>REACTERS</HeaderLogo>
           <HeaderRight>
-            <Button color="cyan">로그인</Button>
+            <Button to="/login" color="cyan">
+              로그인
+            </Button>
           </HeaderRight>
         </Wrapper>
       </HeaderBlock>
