@@ -17,7 +17,11 @@ import {
   useInitializeForm,
   useSetAuth,
 } from '../../hooks/auth';
+
 import { useUserCheck } from '../../hooks/user';
+
+// util 라이브러리
+import { setLoginUser } from '../../utils/localStorage';
 
 const ButtonMarginTop = styled(Button)`
   ${({ theme }) => {
@@ -69,12 +73,6 @@ const AuthForm = ({ type }) => {
     resetField();
   }, []);
 
-  // 에러 처리
-  // 1. 하나라도 비어있다면 에러
-  // 2. 비밀번호 일치 여부 에러  => 비밀번호 초기화 시켜주기
-  // 3. 409 에러
-  // 4. 기타 백엔드 에러
-
   // 회원가입 or 로그인 성공/실패 처리
   useEffect(() => {
     if (authError) {
@@ -92,8 +90,7 @@ const AuthForm = ({ type }) => {
 
       // Unauthorized
       if (authError.response.status === 401) {
-        // user가 DB에 존재하지 않을 경우
-        // 해당 유저가 없거나 비밀번호가 틀렸을 때
+        // user가 DB에 존재하지 않을 경우 or 해당 유저가 없거나 비밀번호가 틀렸을 때
         setError('로그인 실패');
         return;
       }
@@ -110,6 +107,7 @@ const AuthForm = ({ type }) => {
   useEffect(() => {
     if (user) {
       navigator('/');
+      setLoginUser(user);
     }
   }, [user]);
 
