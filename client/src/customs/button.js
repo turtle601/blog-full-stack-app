@@ -34,11 +34,11 @@ const StyledButton = styled.button`
 
   ${props => {
     return (
-      props.cyan &&
+      props.color &&
       css`
-        background-color: ${props.theme.color.cyan[500]};
+        background-color: ${props.theme.color[props.color][500]};
         &:hover {
-          background-color: ${props.theme.color.cyan[400]};
+          background-color: ${props.theme.color[props.color][400]};
         }
       `
     );

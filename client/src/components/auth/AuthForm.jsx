@@ -176,7 +176,7 @@ const AuthForm = ({ type }) => {
 
       {error && <ErrorMessage>{error}</ErrorMessage>}
 
-      <ButtonMarginTop fullWidth cyan>
+      <ButtonMarginTop fullWidth color={'cyan'}>
         {authType[type]}
       </ButtonMarginTop>
 

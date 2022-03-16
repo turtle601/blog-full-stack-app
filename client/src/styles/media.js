@@ -1,17 +1,16 @@
 import { css } from 'styled-components';
 
 const sizes = {
-  desktop: 1280,
-  laptop: 1024,
-  tablet: 768,
-  miniTablet: 480,
-  mobile: 320,
+  desktop: 1279,
+  laptop: 1023,
+  tablet: 767,
+  miniTablet: 479,
+  mobile: 319,
 };
 
 export default Object.keys(sizes).reduce((acc, label) => {
   acc[label] = (...args) => css`
-    @media (max-width: ${sizes[label]}px) {
-      ${console.log(args)};
+    @media screen and (max-width: ${sizes[label]}px) {
       ${css(...args)};
     }
   `;

@@ -22,6 +22,8 @@ import LoginPage from './pages/LoginPage';
 //media 관련
 import media from './styles/media';
 
+console.log(media);
+
 const App = () => {
   const [darkMode, setDarkMode] = useDarkMode();
   return (
