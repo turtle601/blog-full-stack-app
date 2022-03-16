@@ -4,6 +4,10 @@ import styled, { css } from 'styled-components';
 // 컴포넌트
 import Responsive from './Responsive';
 import Button from './Button';
+import LinkButton from './LinkButton';
+
+// hooks 관련
+import { useUserCheck } from '../../hooks/user';
 
 const HeaderBlock = styled.header`
   display: flex;
@@ -49,15 +53,26 @@ const Spacer = styled.div`
 `;
 
 const Header = () => {
+  const [user, setUserCheck] = useUserCheck();
+  console.log(user);
   return (
     <>
       <HeaderBlock>
         <Wrapper>
           <HeaderLogo>REACTERS</HeaderLogo>
           <HeaderRight>
-            <Button to="/login" color="cyan">
-              로그인
-            </Button>
+            {user ? (
+              <>
+                <div>{user.username}</div>
+                <Button color="cyan">로그아웃</Button>
+              </>
+            ) : (
+              <>
+                <LinkButton color="cyan" to="/login">
+                  로그인
+                </LinkButton>
+              </>
+            )}
           </HeaderRight>
         </Wrapper>
       </HeaderBlock>

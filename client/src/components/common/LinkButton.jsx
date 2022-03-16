@@ -1,7 +1,9 @@
 import React from 'react';
-import styled, { css } from 'styled-components';
 
-const StyledButton = styled.button`
+import styled, { css } from 'styled-components';
+import { Link } from 'react-router-dom';
+
+const StyledLink = styled(Link)`
   border: none;
   outline: none;
   cursor: pointer;
@@ -46,8 +48,8 @@ const StyledButton = styled.button`
   }}
 `;
 
-const Button = ({ ...rest }) => {
-  return <StyledButton {...rest}></StyledButton>;
+const LinkButton = ({ ...rest }) => {
+  return <StyledLink {...rest}></StyledLink>;
 };
 
-export default Button;
+export default LinkButton;

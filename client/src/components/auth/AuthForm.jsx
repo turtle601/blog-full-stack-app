@@ -19,22 +19,6 @@ import {
 } from '../../hooks/auth';
 import { useUserCheck } from '../../hooks/user';
 
-// import { Center } from '../../layout/flexbox';
-
-// export const ErrorMessage = styled(Center)`
-//   background: none;
-//   border: none;
-//   outline: none;
-
-//   ${({ theme }) => {
-//     return css`
-//       font-weight: ${theme.fontSizes.bold};
-//       color: ${theme.color.red[400]};
-//       padding: ${theme.space[4]};
-//     `;
-//   }}
-// `;
-
 const ButtonMarginTop = styled(Button)`
   ${({ theme }) => {
     return css`
