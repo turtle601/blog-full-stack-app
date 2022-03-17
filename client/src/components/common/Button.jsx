@@ -1,3 +1,4 @@
+import React from 'react';
 import styled, { css } from 'styled-components';
 
 const StyledButton = styled.button`
@@ -34,15 +35,19 @@ const StyledButton = styled.button`
 
   ${props => {
     return (
-      props.cyan &&
+      props.color &&
       css`
-        background-color: ${props.theme.color.cyan[500]};
+        background-color: ${props.theme.color[props.color][500]};
         &:hover {
-          background-color: ${props.theme.color.cyan[400]};
+          background-color: ${props.theme.color[props.color][400]};
         }
       `
     );
   }}
 `;
 
-export const Button = props => <StyledButton {...props} />;
+const Button = ({ ...rest }) => {
+  return <StyledButton {...rest}></StyledButton>;
+};
+
+export default Button;

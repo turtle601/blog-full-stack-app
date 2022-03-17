@@ -1,8 +1,10 @@
+import React from 'react';
+
 import styled, { css } from 'styled-components';
 
-import { Center } from '../layout/flexbox';
+import { Center } from '../../layout/flexbox';
 
-export const ErrorMessage = styled(Center)`
+export const StyledErrorMessage = styled(Center)`
   background: none;
   border: none;
   outline: none;
@@ -15,3 +17,9 @@ export const ErrorMessage = styled(Center)`
     `;
   }}
 `;
+
+const ErrorMessage = ({ children }) => {
+  return <StyledErrorMessage>{children}</StyledErrorMessage>;
+};
+
+export default ErrorMessage;

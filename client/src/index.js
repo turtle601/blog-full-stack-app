@@ -16,8 +16,12 @@ import createSagaMiddleware from 'redux-saga';
 // redux-logger 라이브러리
 import { createLogger } from 'redux-logger';
 
+// redux + redux-saga
 import rootReducer from './stores';
 import rootSaga from './sagas';
+
+// localStorage user 가져오기
+import { loadUser } from './utils/localStorage';
 
 import App from './App';
 
@@ -31,6 +35,7 @@ const store = createStore(
 );
 
 sagaMiddleware.run(rootSaga);
+loadUser(store);
 
 ReactDOM.render(
   <Router>

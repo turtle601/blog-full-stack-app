@@ -1,3 +1,5 @@
+import React from 'react';
+
 import styled, { css } from 'styled-components';
 
 const StyledInput = styled.input`
@@ -42,4 +44,13 @@ const StyledInput = styled.input`
   }}
 `;
 
-export const Input = props => <StyledInput {...props} />;
+const Input = ({ ...rest }) => {
+  const onChange = e => {
+    if (rest.onChange) {
+      rest.onChange(e);
+    }
+  };
+  return <StyledInput {...rest} onChange={onChange}></StyledInput>;
+};
+
+export default Input;

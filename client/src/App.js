@@ -19,10 +19,19 @@ import Home from './pages/Home';
 import RegisterPage from './pages/RegisterPage';
 import LoginPage from './pages/LoginPage';
 
+//media 관련
+import media from './styles/media';
+
+console.log(media);
+
 const App = () => {
   const [darkMode, setDarkMode] = useDarkMode();
   return (
-    <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
+    <ThemeProvider
+      theme={
+        darkMode ? { ...darkTheme, ...media } : { ...lightTheme, ...media }
+      }
+    >
       <GlobalStyle />
       <Routes>
         <Route path="/" element={<Home />} />
