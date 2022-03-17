@@ -20,7 +20,7 @@ const checkFailureSaga = () => {
 
 function* logoutSaga() {
   yield call(authAPI.logout); // logout API 호출
-  removeLoginUser();
+  removeLoginUser(); // 로그아웃 발생 시 localdata제거
 }
 
 function* watchUser() {

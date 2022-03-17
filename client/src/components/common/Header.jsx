@@ -7,7 +7,10 @@ import Button from './Button';
 import LinkButton from './LinkButton';
 
 // hooks 관련
-import { useUserCheck, useUserLogout } from '../../hooks/user';
+import { useUserLogout } from '../../hooks/user';
+
+// layout 관련
+import { Center, Flex } from '../../layout/flexbox';
 
 const HeaderBlock = styled.header`
   display: flex;
@@ -42,7 +45,27 @@ const HeaderLogo = styled.div`
   }}
 `;
 
-const HeaderRight = styled.div``;
+const HeaderRight = styled(Flex)`
+  flex-basis: 200px;
+  flex-wrap: wrap;
+  justify-content: space-around;
+
+  ${({ theme }) => theme.desktop`
+    flex-basis: 200px;
+  `}
+  ${({ theme }) => theme.laptop`
+    flex-basis: 200px;
+  `}
+  ${({ theme }) => theme.tablet`
+    flex-basis: 200px;
+  `}
+  ${({ theme }) => theme.miniTablet`
+    flex-basis: 100px;
+  `}
+  ${({ theme }) => theme.mobile`
+    flex-basis: 100px;
+  `}
+`;
 
 const Spacer = styled.div`
   ${({ theme }) => {
@@ -52,12 +75,18 @@ const Spacer = styled.div`
   }}
 `;
 
-const Header = () => {
-  const [user, setUserCheck] = useUserCheck();
-  const [loginUser, setUserLogout] = useUserLogout();
+const Name = styled(Center)`
+  border: 1px solid red;
+  ${({ theme }) => {
+    return css`
+      font-size: ${theme.fontSizes[4]};
+      font-weight: ${theme.fontWeights.bold};
+    `;
+  }}
+`;
 
-  console.log(user);
-  console.log(loginUser);
+const Header = () => {
+  const [user, setUserLogout] = useUserLogout();
 
   return (
     <>
@@ -67,7 +96,7 @@ const Header = () => {
           <HeaderRight>
             {user ? (
               <>
-                <div>{user.username}</div>
+                <Name>{user.username}</Name>
                 <Button color="cyan" onClick={setUserLogout}>
                   로그아웃
                 </Button>
