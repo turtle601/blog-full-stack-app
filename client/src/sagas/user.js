@@ -1,4 +1,4 @@
-import { all, takeLatest, fork } from 'redux-saga/effects';
+import { all, takeLatest, fork, call } from 'redux-saga/effects';
 
 import * as authAPI from '../api/auth';
 import { removeLoginUser } from '../utils/localStorage';
@@ -8,6 +8,7 @@ import createAPIRequestSaga, {
 } from './createRequestSaga';
 
 // type
+const LOGOUT = 'user/LOGOUT';
 const [CHECK, CHECK_SUCCESS, CHECK_FAILURE] =
   createAPIRequestType('user/CHECK');
 
@@ -17,9 +18,15 @@ const checkFailureSaga = () => {
   removeLoginUser(); // 실패할 시 localdata제거
 };
 
+function* logoutSaga() {
+  yield call(authAPI.logout); // logout API 호출
+  removeLoginUser();
+}
+
 function* watchUser() {
   yield takeLatest(CHECK, checkSaga);
   yield takeLatest(CHECK_FAILURE, checkFailureSaga);
+  yield takeLatest(LOGOUT, logoutSaga);
 }
 
 export default function* UserSaga() {

@@ -2,11 +2,7 @@ import React from 'react';
 
 import { useSelector, useDispatch } from 'react-redux';
 
-import { check } from '../stores/user';
-import { getLoginUser } from '../utils/localStorage';
-
-// user 관련 액션
-import { tempSetUser } from '../stores/user';
+import { check, logout } from '../stores/user';
 
 // 로그인 했는지 여부 확인
 export const useUserCheck = () => {
@@ -23,4 +19,21 @@ export const useUserCheck = () => {
   };
 
   return [user, setUserCheck];
+};
+
+// 로그아웃 하기
+export const useUserLogout = () => {
+  const { user } = useSelector(({ userReducer }) => {
+    return {
+      user: userReducer.user,
+    };
+  });
+
+  const dispatch = useDispatch();
+
+  const setUserLogout = () => {
+    dispatch(logout());
+  };
+
+  return [user, setUserLogout];
 };

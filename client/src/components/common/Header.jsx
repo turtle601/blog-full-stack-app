@@ -7,7 +7,7 @@ import Button from './Button';
 import LinkButton from './LinkButton';
 
 // hooks 관련
-import { useUserCheck } from '../../hooks/user';
+import { useUserCheck, useUserLogout } from '../../hooks/user';
 
 const HeaderBlock = styled.header`
   display: flex;
@@ -54,7 +54,11 @@ const Spacer = styled.div`
 
 const Header = () => {
   const [user, setUserCheck] = useUserCheck();
+  const [loginUser, setUserLogout] = useUserLogout();
+
   console.log(user);
+  console.log(loginUser);
+
   return (
     <>
       <HeaderBlock>
@@ -64,7 +68,9 @@ const Header = () => {
             {user ? (
               <>
                 <div>{user.username}</div>
-                <Button color="cyan">로그아웃</Button>
+                <Button color="cyan" onClick={setUserLogout}>
+                  로그아웃
+                </Button>
               </>
             ) : (
               <>
