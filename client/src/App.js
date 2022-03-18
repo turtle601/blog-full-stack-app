@@ -21,6 +21,7 @@ import LoginPage from './pages/LoginPage';
 
 //media 관련
 import media from './styles/media';
+import WritePage from './pages/WritePage';
 
 console.log(media);
 
@@ -37,6 +38,7 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/write" element={<WritePage />} />
       </Routes>
     </ThemeProvider>
   );
