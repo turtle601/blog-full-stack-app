@@ -5,6 +5,9 @@ import styled, { css } from 'styled-components';
 import Responsive from '../common/Responsive';
 import Input from '../common/Input';
 
+// hook 관련 라이브리러
+import { useWriteField } from '../../hooks/write';
+
 const EditorBlock = styled(Responsive)`
   width: 100%;
   position: relative;
@@ -54,6 +57,8 @@ const Editor = () => {
   const quillElement = useRef(null);
   const quillInstance = useRef(null);
 
+  const [{ title, body }, setChangeField, setInitialize] = useWriteField();
+
   useEffect(() => {
     quillInstance.current = new Quill(quillElement.current, {
       theme: 'bubble',
@@ -67,10 +72,27 @@ const Editor = () => {
         ],
       },
     });
+
+    const quill = quillInstance.current;
+
+    quill.on('text-change', (delta, oldDelta, source) => {
+      if (source === 'user') {
+        setChangeField({ key: 'body', value: quill.root.innerHTML });
+      }
+    });
   }, []);
+
+  const onChangeTitle = e => {
+    setChangeField({ key: 'title', value: e.target.value });
+  };
+
   return (
     <EditorBlock>
-      <TitleInput underline placeholder="제목을 입력하세요" />
+      <TitleInput
+        underline
+        placeholder="제목을 입력하세요"
+        onChange={onChangeTitle}
+      />
       <Quilwrapper>
         <div ref={quillElement} />
       </Quilwrapper>
