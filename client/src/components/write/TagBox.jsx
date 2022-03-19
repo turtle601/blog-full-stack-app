@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useCallback } from 'react';
 import styled, { css } from 'styled-components';
 
 import Button from '../common/Button';
@@ -16,6 +16,7 @@ const TagName = styled.h3`
 const TagForm = styled.form`
   display: flex;
   width: 200px;
+  height: 40px;
 
   ${({ theme }) => {
     return css`
@@ -26,7 +27,7 @@ const TagForm = styled.form`
 `;
 
 const TagButton = styled(Button)`
-  width: 50px;
+  width: 60px;
   ${({ theme }) => {
     return css`
       font-size: ${theme.fontSizes['sm']};
@@ -51,27 +52,61 @@ const TagItemBlock = styled.li`
   }}
 `;
 
-const TagItem = React.memo(({ tag }) => <TagItemBlock>#{tag}</TagItemBlock>);
+const TagItem = React.memo(({ tag, onRemove }) => {
+  return <TagItemBlock onClick={() => onRemove(tag)}>#{tag}</TagItemBlock>;
+});
 
-const TagList = React.memo(({ tags }) => {
+const TagList = React.memo(({ tags, onRemove }) => {
   return (
     <TagListBlock>
       {tags.map(tag => {
-        return <TagItem tag={tag} key={tag} />;
+        return <TagItem tag={tag} key={tag} onRemove={onRemove} />;
       })}
     </TagListBlock>
   );
 });
 
 const TagBox = () => {
+  const [input, setInput] = useState('');
+  const [localTags, setLocalTags] = useState([]);
+
+  const insertTag = useCallback(tag => {
+    if (!tag) return; // 공백이라면 추가 X
+    if (localTags.includes(tag)) return; // 이미 존재한다면 추가 X
+    setLocalTags([...localTags, tag]);
+  });
+
+  const onRemove = useCallback(
+    tag => {
+      setLocalTags(localTags.filter(t => t !== tag));
+    },
+    [localTags],
+  );
+
+  const onChange = useCallback(e => {
+    setInput(e.target.value);
+  }, []);
+
+  const onSubmit = useCallback(
+    e => {
+      e.preventDefault();
+      insertTag(input.trim()); // 아ㅠ뒤 공백을 없앤 후 등록
+      setInput('');
+    },
+    [input, insertTag],
+  );
   return (
     <>
       <TagName>태그</TagName>
-      <TagForm>
-        <TagInput placeholder="태그를 입력하세요" />
+      <TagForm onSubmit={onSubmit}>
+        <TagInput
+          placeholder="태그를 입력하세요"
+          value={input}
+          onChange={onChange}
+        />
         <TagButton color="gray">추가</TagButton>
       </TagForm>
-      <TagList tags={['태그1', '태그2', '태그3']}></TagList>
+      <TagList tags={localTags} onRemove={onRemove}></TagList>
     </>
   );
 };

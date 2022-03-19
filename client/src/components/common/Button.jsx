@@ -5,6 +5,7 @@ const StyledButton = styled.button`
   border: none;
   outline: none;
   cursor: pointer;
+  color: white;
 
   ${({ theme }) => {
     return css`
@@ -37,9 +38,9 @@ const StyledButton = styled.button`
     return (
       props.color &&
       css`
-        background-color: ${props.theme.color[props.color][500]};
+        background-color: ${props.theme.color[props.color][400]};
         &:hover {
-          background-color: ${props.theme.color[props.color][400]};
+          background-color: ${props.theme.color[props.color][500]};
         }
       `
     );

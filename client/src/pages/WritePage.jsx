@@ -4,6 +4,7 @@ import Editor from '../components/write/Editor';
 import Responsive from '../components/common/Responsive';
 import TagBox from '../components/write/TagBox';
 import styled, { css } from 'styled-components';
+import WriteActionButtons from '../components/write/WriteActionButtons';
 
 const VResponsive = styled(Responsive)`
   flex-direction: column;
@@ -23,6 +24,7 @@ const WritePage = () => {
       <VResponsive>
         <Editor />
         <TagBox />
+        <WriteActionButtons />
       </VResponsive>
     </>
   );
