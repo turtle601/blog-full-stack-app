@@ -6,12 +6,14 @@ import Responsive from '../common/Responsive';
 import Input from '../common/Input';
 
 const EditorBlock = styled(Responsive)`
+  width: 100%;
+  position: relative;
+
   flex-direction: column;
-  box-sizing: border-box;
+
   // 페이지 위아래 여백 지정
   ${({ theme }) => {
     return css`
-      padding-left: ${theme.space[5]};
       padding-top: ${theme.space[20]};
       padding-bottom: ${theme.space[20]};
     `;
@@ -24,8 +26,8 @@ const TitleInput = styled(Input)`
 
   ${({ theme }) => {
     return css`
-      margin-bottom: ${theme.space[5]};
-      font-size: ${theme.fontSizes['5xl']};
+      font-size: ${theme.fontSizes['3xl']};
+      margin-bottom: ${theme.space[4]};
     `;
   }}
 `;
@@ -67,14 +69,12 @@ const Editor = () => {
     });
   }, []);
   return (
-    <>
-      <EditorBlock>
-        <TitleInput underline placeholder="제목을 입력하세요" />
-        <Quilwrapper>
-          <div ref={quillElement} />
-        </Quilwrapper>
-      </EditorBlock>
-    </>
+    <EditorBlock>
+      <TitleInput underline placeholder="제목을 입력하세요" />
+      <Quilwrapper>
+        <div ref={quillElement} />
+      </Quilwrapper>
+    </EditorBlock>
   );
 };
 
