@@ -1,7 +1,6 @@
 import React, { useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import writeReducer from '../stores/wrtie';
-import { changeField, initailize } from '../stores/wrtie';
+import { changeField, initailize } from '../stores/write';
 
 export const useWriteField = () => {
   const dispatch = useDispatch();

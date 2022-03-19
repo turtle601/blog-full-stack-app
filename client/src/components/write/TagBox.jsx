@@ -1,8 +1,11 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import styled, { css } from 'styled-components';
 
 import Button from '../common/Button';
 import Input from '../common/Input';
+
+// hooks 관련 라이브러리
+import { useTagField } from '../../hooks/write';
 
 const TagName = styled.h3`
   ${({ theme }) => {
@@ -69,16 +72,21 @@ const TagList = React.memo(({ tags, onRemove }) => {
 const TagBox = () => {
   const [input, setInput] = useState('');
   const [localTags, setLocalTags] = useState([]);
+  const [reduxTags, setChangeTagField] = useTagField();
 
   const insertTag = useCallback(tag => {
     if (!tag) return; // 공백이라면 추가 X
     if (localTags.includes(tag)) return; // 이미 존재한다면 추가 X
-    setLocalTags([...localTags, tag]);
+    const newTags = [...localTags, tag];
+    setLocalTags(newTags);
+    setChangeTagField(newTags);
   });
 
   const onRemove = useCallback(
     tag => {
-      setLocalTags(localTags.filter(t => t !== tag));
+      const newTags = localTags.filter(t => t !== tag);
+      setLocalTags(newTags);
+      setChangeTagField(newTags);
     },
     [localTags],
   );
@@ -95,6 +103,11 @@ const TagBox = () => {
     },
     [input, insertTag],
   );
+
+  useEffect(() => {
+    setLocalTags(reduxTags);
+  }, [reduxTags]);
+
   return (
     <>
       <TagName>태그</TagName>

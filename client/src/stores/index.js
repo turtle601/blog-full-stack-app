@@ -5,7 +5,7 @@ import darkReducer from './dark';
 import authReducer from './auth';
 import loadingReducer from './loading';
 import userReducer from './user';
-import writeReducer from './wrtie';
+import writeReducer from './write';
 
 const rootReducer = combineReducers({
   darkReducer,

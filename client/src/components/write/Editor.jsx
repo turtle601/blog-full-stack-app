@@ -92,6 +92,7 @@ const Editor = () => {
         underline
         placeholder="제목을 입력하세요"
         onChange={onChangeTitle}
+        value={title}
       />
       <Quilwrapper>
         <div ref={quillElement} />
