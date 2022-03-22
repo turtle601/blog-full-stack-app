@@ -15,8 +15,6 @@ export const useWrittenState = () => {
 
   const setPublish = useCallback(() => {
     const { title, body, tags, post, postError } = writtenPost;
-    console.log(title, body, tags);
-    console.log(typeof body);
     dispatch(
       writePost({
         title,

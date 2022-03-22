@@ -1,6 +1,6 @@
-import { all, takeLatest, fork, call } from 'redux-saga/effects';
+import { all, takeLatest, fork } from 'redux-saga/effects';
 
-import * as authAPI from '../api/auth';
+import * as writeAPI from '../api/write';
 
 import createAPIRequestSaga from './createRequestSaga';
 
@@ -8,7 +8,7 @@ import createAPIRequestSaga from './createRequestSaga';
 const WRITE_POST = 'write/WRITE_POST';
 
 // 사가 생성
-const writePostSaga = createAPIRequestSaga(WRITE_POST, authAPI.writePost);
+const writePostSaga = createAPIRequestSaga(WRITE_POST, writeAPI.writePost);
 
 function* watchUser() {
   yield takeLatest(WRITE_POST, writePostSaga);

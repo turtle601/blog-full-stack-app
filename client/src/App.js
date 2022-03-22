@@ -23,8 +23,6 @@ import LoginPage from './pages/LoginPage';
 import media from './styles/media';
 import WritePage from './pages/WritePage';
 
-console.log(media);
-
 const App = () => {
   const [darkMode, setDarkMode] = useDarkMode();
   return (
