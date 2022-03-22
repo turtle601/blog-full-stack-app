@@ -22,6 +22,7 @@ const Home = () => {
       <Header />
       <button onClick={setDarkMode}>테스트</button>
       <RegisterLink to="/register">회원가입</RegisterLink>
+      <Link to="/write">새 글 작성</Link>
     </>
   );
 };

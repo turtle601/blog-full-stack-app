@@ -39,6 +39,7 @@ const App = () => {
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/write" element={<WritePage />} />
+        <Route path="/@:username/:id" element={<WritePage />} />
       </Routes>
     </ThemeProvider>
   );

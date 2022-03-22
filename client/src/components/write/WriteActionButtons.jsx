@@ -1,6 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import Button from '../common/Button';
+
+import { useNavigate } from 'react-router-dom';
+
+import { useWrittenState } from '../../hooks/writeAction';
 
 const WriteActionButtonsBlock = styled.div`
   margin-top: 1rem;
@@ -18,10 +22,27 @@ const StyledButton = styled(Button)`
   }
 `;
 
-const WriteActionButtons = ({ onCancel, onPublish }) => {
+const WriteActionButtons = () => {
+  const navigator = useNavigate();
+  const [{ title, body, tags, post, postError }, setPublish] =
+    useWrittenState();
+
+  const onCancel = () => {
+    navigator(-1);
+  };
+
+  useEffect(() => {
+    if (post) {
+      const { _id, user } = post;
+      navigator(`/@${user.username}/${_id}`);
+    }
+    if (postError) {
+      console.log(postError);
+    }
+  }, [post, postError, navigator]);
   return (
     <WriteActionButtonsBlock>
-      <StyledButton color="cyan" onClick={onPublish}>
+      <StyledButton color="cyan" onClick={setPublish}>
         포스트 등록
       </StyledButton>
       <StyledButton onClick={onCancel}>취소</StyledButton>

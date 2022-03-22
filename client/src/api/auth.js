@@ -19,3 +19,8 @@ export const check = async () => {
 export const logout = async () => {
   return await client.post('/api/auth/logout');
 };
+
+// 포스트 작성
+export const writePost = async () => {
+  return await client.post('/api/posts');
+};
