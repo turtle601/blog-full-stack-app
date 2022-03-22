@@ -21,8 +21,7 @@ import LoginPage from './pages/LoginPage';
 
 //media 관련
 import media from './styles/media';
-
-console.log(media);
+import WritePage from './pages/WritePage';
 
 const App = () => {
   const [darkMode, setDarkMode] = useDarkMode();
@@ -37,6 +36,8 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/write" element={<WritePage />} />
+        <Route path="/@:username/:id" element={<WritePage />} />
       </Routes>
     </ThemeProvider>
   );

@@ -5,7 +5,6 @@ import { Flex } from '../../layout/flexbox';
 
 const ResponsiveBlock = styled(Flex)`
   width: 1023px;
-  box-sizing: border-box;
 
   ${({ theme }) => theme.desktop`
     width : 1023px;

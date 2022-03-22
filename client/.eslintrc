@@ -26,10 +26,12 @@
     "no-console": "off",
     "prettier/prettier": 0,
     "import/extensions": 0,
+
     "react/prop-types": 0,
     "react/jsx-uses-react": "off",
     "react/react-in-jsx-scope": "off",
     "react/jsx-props-no-spreading": "off",
+    "react/display-name": "off",
     "react/jsx-filename-extension": [2, { "extensions": [".js", ".jsx"] }]
   }
 }
