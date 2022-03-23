@@ -5,15 +5,15 @@ import * as postsAPI from '../api/posts';
 import createAPIRequestSaga from './createRequestSaga';
 
 // type
-const WRITE_POST = 'write/WRITE_POST';
+const READ_POST = 'post/READ_POST';
 
 // 사가 생성
-const writePostSaga = createAPIRequestSaga(WRITE_POST, postsAPI.writePost);
+const readPostSaga = createAPIRequestSaga(READ_POST, postsAPI.readPost);
 
 function* watchUser() {
-  yield takeLatest(WRITE_POST, writePostSaga);
+  yield takeLatest(READ_POST, readPostSaga);
 }
 
-export default function* WriteSaga() {
+export default function* ReadSaga() {
   yield all([fork(watchUser)]);
 }

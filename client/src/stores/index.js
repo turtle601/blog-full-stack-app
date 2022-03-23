@@ -6,6 +6,7 @@ import authReducer from './auth';
 import loadingReducer from './loading';
 import userReducer from './user';
 import writeReducer from './write';
+import readReducer from './read';
 
 const rootReducer = combineReducers({
   darkReducer,
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
   loadingReducer,
   userReducer,
   writeReducer,
+  readReducer,
 });
 
 export default rootReducer;
