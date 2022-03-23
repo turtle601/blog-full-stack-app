@@ -46,25 +46,8 @@ const HeaderLogo = styled.div`
 `;
 
 const HeaderRight = styled(Flex)`
-  flex-basis: 200px;
   flex-wrap: wrap;
-  justify-content: space-around;
-
-  ${({ theme }) => theme.desktop`
-    flex-basis: 200px;
-  `}
-  ${({ theme }) => theme.laptop`
-    flex-basis: 200px;
-  `}
-  ${({ theme }) => theme.tablet`
-    flex-basis: 200px;
-  `}
-  ${({ theme }) => theme.miniTablet`
-    flex-basis: 100px;
-  `}
-  ${({ theme }) => theme.mobile`
-    flex-basis: 100px;
-  `}
+  justify-content: space-between;
 `;
 
 const Spacer = styled.div`
@@ -76,11 +59,11 @@ const Spacer = styled.div`
 `;
 
 const Name = styled(Center)`
-  border: 1px solid red;
   ${({ theme }) => {
     return css`
       font-size: ${theme.fontSizes[4]};
       font-weight: ${theme.fontWeights.bold};
+      margin-right: ${theme.space[5]};
     `;
   }}
 `;

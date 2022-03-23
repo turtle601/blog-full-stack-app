@@ -18,6 +18,7 @@ import { useDarkMode } from './hooks/useDarkMode';
 import Home from './pages/Home';
 import RegisterPage from './pages/RegisterPage';
 import LoginPage from './pages/LoginPage';
+import PostPage from './pages/PostPage';
 
 //media 관련
 import media from './styles/media';
@@ -37,7 +38,7 @@ const App = () => {
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/write" element={<WritePage />} />
-        <Route path="/@:username/:id" element={<WritePage />} />
+        <Route path="/@:username/:id" element={<PostPage />} />
       </Routes>
     </ThemeProvider>
   );
