@@ -1,11 +1,9 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 
-// 리액트 라우터 관련
-import { Link } from 'react-router-dom';
-
 // 레이아웃 관련
 import { Flex } from '../../layout/flexbox';
+import LinkButton from './LinkButton';
 
 const StyledSubInfo = styled(Flex)`
   ${props => {
@@ -33,7 +31,9 @@ const SubInfo = ({ username, publishedDate, hasMarginTop }) => {
     <StyledSubInfo hasMarginTop={hasMarginTop}>
       <span>
         <b>
-          <Link to={`/@${username}`}>{username}</Link>
+          <LinkButton to={`/@${username}`} $textColor="gray" $noButton>
+            {username}
+          </LinkButton>
         </b>
       </span>
       <span>{new Date(publishedDate).toLocaleDateString()}</span>
