@@ -55,6 +55,7 @@ const TagItemBlock = styled.li`
   }}
 `;
 
+// tag와 tags값에 변화함에 따라 성능 고려 = React.memo
 const TagItem = React.memo(({ tag, onRemove }) => {
   return <TagItemBlock onClick={() => onRemove(tag)}>#{tag}</TagItemBlock>;
 });

@@ -4,6 +4,7 @@ import styled, { css } from 'styled-components';
 // common Component
 import Button from '../common/Button';
 import Responsive from '../common/Responsive';
+import SubInfo from '../common/SubInfo';
 
 // layout 관련
 import { Flex } from '../../layout/flexbox';

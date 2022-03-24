@@ -10,6 +10,7 @@ import { usePostViewer } from '../../hooks/read';
 // Component 가져오기
 import Responsive from '../common/Responsive';
 import SubInfo from '../common/SubInfo';
+import Tags from '../common/Tags';
 
 const PostViewerBlock = styled.div`
   width: 100%;
@@ -34,6 +35,7 @@ const PostHead = styled.header`
     return css`
       padding-bottom: ${theme.space[9]};
       margin-bottom: ${theme.space[9]};
+      border-bottom: 1px solid ${theme.color.gray[400]};
     `;
   }}
 `;
@@ -115,12 +117,7 @@ const PostViewer = () => {
             publishedDate={publishedDate}
             hasMarginTop={2}
           />
-
-          <PostTagList>
-            {tags.map(tag => {
-              return <PostTagItem key={tag}>#{tag}</PostTagItem>;
-            })}
-          </PostTagList>
+          <Tags tags={tags} />
         </PostHead>
         <PostContent dangerouslySetInnerHTML={{ __html: body }}></PostContent>
       </PostWrapper>
