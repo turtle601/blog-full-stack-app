@@ -5,6 +5,7 @@ import styled, { css } from 'styled-components';
 import Button from '../common/Button';
 import Responsive from '../common/Responsive';
 import SubInfo from '../common/SubInfo';
+import Tags from '../common/Tags';
 
 // layout 관련
 import { Flex } from '../../layout/flexbox';
@@ -22,19 +23,32 @@ const PostListBlock = styled.div`
   }}
 `;
 
-const PostListWrapper = styled(Responsive)``;
+const PostListWrapper = styled(Responsive)`
+  flex-direction: column;
+`;
 
 const List = styled.div``;
 
-const Item = styled.div``;
+const Item = styled.div`
+  width: 100%;
 
-const ItemTitle = styled.h2``;
+  ${({ theme }) => {
+    return css`
+      padding-bottom: ${theme.space[9]};
+      margin-bottom: ${theme.space[9]};
+      border-bottom: 1px solid ${theme.color.gray[400]};
+    `;
+  }}
+`;
 
-const ItemSubInfo = styled.div``;
-
-const ItemTags = styled(Flex)``;
-
-const ItemTag = styled.div``;
+const ItemTitle = styled.h1`
+  line-height: 1.5;
+  ${({ theme }) => {
+    return css`
+      font-size: ${theme.fontSizes['5xl']};
+    `;
+  }}
+`;
 
 const PostList = () => {
   return (
@@ -43,14 +57,31 @@ const PostList = () => {
         <List>
           <Item>
             <ItemTitle>제목</ItemTitle>
-            <ItemSubInfo>작성자 이름 + publishedDate</ItemSubInfo>
-            <ItemTags>
-              <ItemTag>#hi</ItemTag>
-              <ItemTag>#bye</ItemTag>
-            </ItemTags>
+            <SubInfo
+              username="유저이름"
+              publishedDate={new Date()}
+              hasMarginTop={2}
+            />
+            <Tags tags={['1', '2', '3']} />
           </Item>
-          <Item>post2</Item>
-          <Item>post3</Item>
+          <Item>
+            <ItemTitle>제목</ItemTitle>
+            <SubInfo
+              username="유저이름"
+              publishedDate={new Date()}
+              hasMarginTop={2}
+            />
+            <Tags tags={['1', '2', '3']} />
+          </Item>
+          <Item>
+            <ItemTitle>제목</ItemTitle>
+            <SubInfo
+              username="유저이름"
+              publishedDate={new Date()}
+              hasMarginTop={2}
+            />
+            <Tags tags={['1', '2', '3']} />
+          </Item>
         </List>
       </PostListWrapper>
     </PostListBlock>

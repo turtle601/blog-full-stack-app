@@ -14,6 +14,7 @@ import Tags from '../common/Tags';
 
 const PostViewerBlock = styled.div`
   width: 100%;
+
   display: flex;
   justify-content: center;
 
@@ -45,30 +46,6 @@ const PostTitle = styled.h1`
   ${({ theme }) => {
     return css`
       font-size: ${theme.fontSizes['5xl']};
-    `;
-  }}
-`;
-
-const PostTagList = styled(Flex)`
-  ${({ theme }) => {
-    return css`
-      margin-top: ${theme.space[1]};
-
-      div + div {
-        margin-left: ${theme.space[4]};
-      }
-    `;
-  }}
-`;
-
-const PostTagItem = styled.div`
-  cursor: pointer;
-  ${({ theme }) => {
-    return css`
-      color: ${theme.color.cyan[400]};
-      &:hover {
-        color: ${theme.color.cyan[600]};
-      }
     `;
   }}
 `;
