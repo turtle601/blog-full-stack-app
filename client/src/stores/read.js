@@ -9,23 +9,26 @@ const [READ_POST, READ_POST_SUCCESS, READ_POST_FAILURE] =
 const UNLOAD_POST = 'post/UNLOAD_POST';
 
 export const readPost = createAction(READ_POST, id => id);
+export const unloadPost = createAction(UNLOAD_POST);
 
 const initialState = {
   post: null,
   error: null,
 };
 
-const readReducer = handleActions({
-  [READ_POST_SUCCESS]: (state, { payload: post }) => ({
-    ...state,
-    post,
-  }),
-  [READ_POST_FAILURE]: (state, { payload: error }) => ({
-    ...state,
-    error,
-  }),
-  [UNLOAD_POST]: () => initialState,
+const readReducer = handleActions(
+  {
+    [READ_POST_SUCCESS]: (state, { payload: post }) => ({
+      ...state,
+      post,
+    }),
+    [READ_POST_FAILURE]: (state, { payload: error }) => ({
+      ...state,
+      error,
+    }),
+    [UNLOAD_POST]: () => initialState,
+  },
   initialState,
-});
+);
 
 export default readReducer;

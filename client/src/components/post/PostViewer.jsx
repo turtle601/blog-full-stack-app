@@ -1,6 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled, { css } from 'styled-components';
+
+// 레이아웃 관련
 import { Flex } from '../../layout/flexbox';
+
+// hooks 관련
+import { usePostViewer } from '../../hooks/read';
 
 // Component 가져오기
 import Responsive from '../common/Responsive';
@@ -88,24 +93,46 @@ const PostContent = styled.div`
 `;
 
 const PostViewer = () => {
+  const [{ post, error, loading }, setReadPost, setUnloadPost] =
+    usePostViewer();
+
+  useEffect(() => {
+    setReadPost();
+    return () => {
+      setUnloadPost(); // 언마운트될 때 리덕스에서 없애기
+    };
+  }, []);
+
+  if (error) {
+    if (error.response && error.response.status === 404) {
+      return <PostViewerBlock> 존재하지 않는 포스트입니다. </PostViewerBlock>;
+    }
+
+    return <PostViewerBlock>오류 발생!</PostViewerBlock>;
+  }
+
+  if (loading || !post) {
+    return null;
+  }
+
+  const { title, body, user, publishedDate, tags } = post;
+
   return (
     <PostViewerBlock>
       <PostWrapper>
         <PostHead>
-          <PostTitle>제목</PostTitle>
+          <PostTitle>{title}</PostTitle>
           <SubInfo>
-            <span>hi</span>
-            <span>날짜</span>
+            <span>{user.username}</span>
+            <span>{new Date(publishedDate).toLocaleDateString()}</span>
           </SubInfo>
           <PostTagList>
-            <PostTagItem>#태그1</PostTagItem>
-            <PostTagItem>#태그2</PostTagItem>
-            <PostTagItem>#태그3</PostTagItem>
+            {tags.map(tag => {
+              return <PostTagItem key={tag}>#{tag}</PostTagItem>;
+            })}
           </PostTagList>
         </PostHead>
-        <PostContent
-          dangerouslySetInnerHTML={{ __html: '<p>hi <h1>내용</h1></p>' }}
-        ></PostContent>
+        <PostContent dangerouslySetInnerHTML={{ __html: body }}></PostContent>
       </PostWrapper>
     </PostViewerBlock>
   );
