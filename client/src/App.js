@@ -19,6 +19,7 @@ import Home from './pages/Home';
 import RegisterPage from './pages/RegisterPage';
 import LoginPage from './pages/LoginPage';
 import PostPage from './pages/PostPage';
+import PostListPage from './pages/PostListPage';
 
 //media 관련
 import media from './styles/media';
@@ -34,7 +35,7 @@ const App = () => {
     >
       <GlobalStyle />
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<PostListPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/write" element={<WritePage />} />
