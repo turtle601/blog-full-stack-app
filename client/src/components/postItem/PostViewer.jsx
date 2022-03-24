@@ -9,6 +9,7 @@ import { usePostViewer } from '../../hooks/read';
 
 // Component 가져오기
 import Responsive from '../common/Responsive';
+import SubInfo from '../common/SubInfo';
 
 const PostViewerBlock = styled.div`
   width: 100%;
@@ -42,19 +43,6 @@ const PostTitle = styled.h1`
   ${({ theme }) => {
     return css`
       font-size: ${theme.fontSizes['5xl']};
-    `;
-  }}
-`;
-
-const SubInfo = styled(Flex)`
-  ${({ theme }) => {
-    return css`
-      margin-top: ${theme.space[2]};
-      color: ${theme.color.gray[400]};
-
-      span + span {
-        margin-left: ${theme.space[4]};
-      }
     `;
   }}
 `;
@@ -122,10 +110,12 @@ const PostViewer = () => {
       <PostWrapper>
         <PostHead>
           <PostTitle>{title}</PostTitle>
-          <SubInfo>
-            <span>{user.username}</span>
-            <span>{new Date(publishedDate).toLocaleDateString()}</span>
-          </SubInfo>
+          <SubInfo
+            username={user.username}
+            publishedDate={publishedDate}
+            hasMarginTop={2}
+          />
+
           <PostTagList>
             {tags.map(tag => {
               return <PostTagItem key={tag}>#{tag}</PostTagItem>;
