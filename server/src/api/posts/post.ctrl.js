@@ -3,6 +3,11 @@ import mongoose from 'mongoose';
 import Post from '../../models/posts';
 import { checkReqPosts, checkReqUpdatePost } from '../../lib/joi/checkReqPost';
 
+import {
+  doSanitizeHtml,
+  removeHTMLAndShorten,
+} from '../../lib/utils/htmlFiltering';
+
 const { ObjectId } = mongoose.Types;
 
 // id 검증
@@ -32,9 +37,6 @@ export const getPostId = async (ctx, next) => {
 // Post 작성자가 User인지 확인
 export const checkOwnPost = (ctx, next) => {
   const { user, post } = ctx.state;
-
-  console.log(post.user._id);
-  console.log(user._id);
 
   if (post.user._id.toString() !== user._id) {
     ctx.status = 403; // Forbidden
@@ -66,8 +68,7 @@ export const list = async ctx => {
     ctx.set('Last-page', Math.ceil(postCount / 10));
     ctx.body = posts.map(post => ({
       ...post,
-      body:
-        post.body.length > 200 ? `${post.body.slice(0, 200)}...` : post.body,
+      body: removeHTMLAndShorten(post.body),
     }));
   } catch (e) {
     ctx.throw(500, e);
@@ -94,7 +95,7 @@ export const write = async ctx => {
   const { title, body, tags } = ctx.request.body;
   const post = new Post({
     title,
-    body,
+    body: doSanitizeHtml(body),
     tags,
     user: ctx.state.user,
   });
@@ -136,8 +137,15 @@ export const update = async ctx => {
     ctx.status = 400;
     return;
   }
+
+  const nextData = { ...ctx.request.body }; // 객체를 복사
+
+  if (nextData.body) {
+    nextData.body = doSanitizeHtml(nextData.body);
+  }
+
   try {
-    const post = await Post.findByIdAndUpdate(id, ctx.request.body, {
+    const post = await Post.findByIdAndUpdate(id, nextData, {
       new: true,
     }).exec();
 
