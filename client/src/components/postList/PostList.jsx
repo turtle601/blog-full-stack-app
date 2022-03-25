@@ -3,12 +3,15 @@ import styled, { css } from 'styled-components';
 import { usePostList } from '../../hooks/postList';
 
 // common Component
+import LinkButton from '../common/LinkButton';
 import Responsive from '../common/Responsive';
 import PostItem from './PostItem';
 
+// layout 관련
+import { RightAlign } from '../../layout/flexbox';
+
 const PostListBlock = styled.div`
   width: 100%;
-
   display: flex;
   justify-content: center;
 
@@ -24,6 +27,18 @@ const PostListWrapper = styled(Responsive)`
 `;
 
 const PostItemList = styled.ul``;
+
+const WriteButton = styled(LinkButton)`
+  width: max-content;
+  box-sizing: border-box;
+
+  ${({ theme }) => {
+    return css`
+      padding-left: ${theme.space[4]};
+      padding-right: ${theme.space[4]};
+    `;
+  }}
+`;
 
 const PostList = () => {
   const [{ posts, error, loading, userInfo }, setPostList] = usePostList();
@@ -43,6 +58,13 @@ const PostList = () => {
   return (
     <PostListBlock>
       <PostListWrapper>
+        <RightAlign>
+          {userInfo && (
+            <WriteButton to={'/write'} color="cyan">
+              새 글 작성
+            </WriteButton>
+          )}
+        </RightAlign>
         <PostItemList>
           {!loading &&
             posts &&
