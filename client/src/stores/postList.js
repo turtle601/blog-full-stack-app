@@ -17,15 +17,17 @@ export const listPost = createAction(LIST_POST, ({ page, username, tag }) => {
 const initialState = {
   posts: null,
   error: null,
+  lastPage: 1,
 };
 
 // 리듀서
 const listReducer = handleActions(
   {
-    [LIST_POST_SUCCESS]: (state, { payload: posts }) => {
+    [LIST_POST_SUCCESS]: (state, { payload: posts, meta: response }) => {
       return {
         ...state,
         posts,
+        lastPage: parseInt(response.headers['last-page'], 10),
       };
     },
     [LIST_POST_FAILURE]: (state, { payload: error }) => {
