@@ -7,6 +7,7 @@ import loadingReducer from './loading';
 import userReducer from './user';
 import writeReducer from './write';
 import readReducer from './read';
+import listReducer from './postList';
 
 const rootReducer = combineReducers({
   darkReducer,
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
   userReducer,
   writeReducer,
   readReducer,
+  listReducer,
 });
 
 export default rootReducer;

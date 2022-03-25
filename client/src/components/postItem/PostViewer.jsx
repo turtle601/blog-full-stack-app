@@ -9,9 +9,12 @@ import { usePostViewer } from '../../hooks/read';
 
 // Component 가져오기
 import Responsive from '../common/Responsive';
+import SubInfo from '../common/SubInfo';
+import Tags from '../common/Tags';
 
 const PostViewerBlock = styled.div`
   width: 100%;
+
   display: flex;
   justify-content: center;
 
@@ -33,6 +36,7 @@ const PostHead = styled.header`
     return css`
       padding-bottom: ${theme.space[9]};
       margin-bottom: ${theme.space[9]};
+      border-bottom: 1px solid ${theme.color.gray[400]};
     `;
   }}
 `;
@@ -42,43 +46,6 @@ const PostTitle = styled.h1`
   ${({ theme }) => {
     return css`
       font-size: ${theme.fontSizes['5xl']};
-    `;
-  }}
-`;
-
-const SubInfo = styled(Flex)`
-  ${({ theme }) => {
-    return css`
-      margin-top: ${theme.space[2]};
-      color: ${theme.color.gray[400]};
-
-      span + span {
-        margin-left: ${theme.space[4]};
-      }
-    `;
-  }}
-`;
-
-const PostTagList = styled(Flex)`
-  ${({ theme }) => {
-    return css`
-      margin-top: ${theme.space[1]};
-
-      div + div {
-        margin-left: ${theme.space[4]};
-      }
-    `;
-  }}
-`;
-
-const PostTagItem = styled.div`
-  cursor: pointer;
-  ${({ theme }) => {
-    return css`
-      color: ${theme.color.cyan[400]};
-      &:hover {
-        color: ${theme.color.cyan[600]};
-      }
     `;
   }}
 `;
@@ -122,15 +89,12 @@ const PostViewer = () => {
       <PostWrapper>
         <PostHead>
           <PostTitle>{title}</PostTitle>
-          <SubInfo>
-            <span>{user.username}</span>
-            <span>{new Date(publishedDate).toLocaleDateString()}</span>
-          </SubInfo>
-          <PostTagList>
-            {tags.map(tag => {
-              return <PostTagItem key={tag}>#{tag}</PostTagItem>;
-            })}
-          </PostTagList>
+          <SubInfo
+            username={user.username}
+            publishedDate={publishedDate}
+            hasMarginTop={2}
+          />
+          <Tags tags={tags} />
         </PostHead>
         <PostContent dangerouslySetInnerHTML={{ __html: body }}></PostContent>
       </PostWrapper>

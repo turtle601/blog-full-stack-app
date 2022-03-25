@@ -10,8 +10,6 @@ const StyledLink = styled(Link)`
 
   ${({ theme }) => {
     return css`
-      background-color: ${theme.color.primary};
-      font-size: ${theme.fontSizes['md']};
       font-weight: ${theme.fontWeights[700]};
       padding: ${theme.space[1]} ${theme.space[2]};
       border-radius: ${theme.space[0.5]};
@@ -23,6 +21,7 @@ const StyledLink = styled(Link)`
     `;
   }}
 
+  // fullWidth - 버튼의 너비를 최대로 하는 속성 + 높이도 채우기
   ${props => {
     return (
       props.fullWidth &&
@@ -42,6 +41,35 @@ const StyledLink = styled(Link)`
         background-color: ${props.theme.color[props.color][500]};
         &:hover {
           background-color: ${props.theme.color[props.color][400]};
+        }
+      `
+    );
+  }}
+
+  // noButton - button과 같은 배경색을 없애는 속성
+  ${props => {
+    return (
+      props.$noButton &&
+      css`
+        background: none;
+        padding: 0;
+
+        &:hover {
+          background: none;
+        }
+      `
+    );
+  }}
+
+  // textColor - link의 글자색 속성 + hover
+  ${props => {
+    return (
+      props.$textColor &&
+      css`
+        color: ${props.theme.color[props.$textColor][400]};
+
+        &:hover {
+          color: ${props.theme.color[props.$textColor][500]};
         }
       `
     );

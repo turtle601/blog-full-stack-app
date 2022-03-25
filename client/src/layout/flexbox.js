@@ -17,3 +17,7 @@ export const VCenter = styled(VFlex)`
   justify-content: center;
   align-items: center;
 `;
+
+export const RightAlign = styled(Flex)`
+  justify-content: flex-end;
+`;
