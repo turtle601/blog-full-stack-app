@@ -10,7 +10,6 @@ const StyledLink = styled(Link)`
 
   ${({ theme }) => {
     return css`
-      font-size: ${theme.fontSizes['md']};
       font-weight: ${theme.fontWeights[700]};
       padding: ${theme.space[1]} ${theme.space[2]};
       border-radius: ${theme.space[0.5]};

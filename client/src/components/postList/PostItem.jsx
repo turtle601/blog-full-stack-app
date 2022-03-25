@@ -3,6 +3,7 @@ import styled, { css } from 'styled-components';
 
 import SubInfo from '../common/SubInfo';
 import Tags from '../common/Tags';
+import LinkButton from '../common/LinkButton';
 
 const PostItemBlock = styled.li`
   width: 100%;
@@ -38,7 +39,11 @@ const PostItem = ({ post }) => {
   const { publishedDate, user, tags, title, body, _id } = post;
   return (
     <PostItemBlock>
-      <PostItemTitle>{title}</PostItemTitle>
+      <PostItemTitle>
+        <LinkButton $noButton to={`/@${user.username}/${_id}`}>
+          {title}
+        </LinkButton>
+      </PostItemTitle>
       <SubInfo
         username={user.username}
         publishedDate={new Date(publishedDate)}
