@@ -8,18 +8,29 @@ const ResponsiveBlock = styled(Flex)`
 
   ${({ theme }) => theme.desktop`
     width : 1023px;
+    margin-left : 2rem;
+    margin-right : 2rem;
   `}
   ${({ theme }) => theme.laptop`
     width : 1023px;
+    margin-left : 2rem;
+    margin-right : 2rem;
   `}
   ${({ theme }) => theme.tablet`
     width : 100%;
+    margin-left : 2rem;
+    margin-right : 2rem;
+
   `}
   ${({ theme }) => theme.miniTablet`
     width : 100%;
+    margin-left : 2rem;
+    margin-right : 2rem;
   `}
   ${({ theme }) => theme.mobile`
     width : 100%;
+    margin-left : 2rem;
+    margin-right : 2rem;
   `}
 `;
 
