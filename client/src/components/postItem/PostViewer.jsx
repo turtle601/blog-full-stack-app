@@ -61,22 +61,26 @@ const PostContent = styled.div`
 `;
 
 const PostViewer = () => {
-  const [{ post, error, loading }, setReadPost, setUnloadPost] =
-    usePostViewer();
+  const [
+    { post, error, loading, ownUser },
+    setReadPost,
+    setUnloadPost,
+    setDoEdit,
+  ] = usePostViewer();
 
   useEffect(() => {
     setReadPost();
     return () => {
       setUnloadPost(); // 언마운트될 때 리덕스에서 없애기
     };
-  }, []);
+  }, [setReadPost, setUnloadPost]);
 
   if (error) {
     if (error.response && error.response.status === 404) {
       return <PostViewerBlock> 존재하지 않는 포스트입니다. </PostViewerBlock>;
     }
 
-    return <PostViewerBlock>오류 발생!</PostViewerBlock>;
+    return <PostViewerBlock> 오류 발생! </PostViewerBlock>;
   }
 
   if (loading || !post) {
@@ -84,6 +88,7 @@ const PostViewer = () => {
   }
 
   const { title, body, user, publishedDate, tags } = post;
+  const checkOwnPost = (user && user._id) === (ownUser && ownUser._id);
 
   return (
     <PostViewerBlock>
@@ -97,7 +102,7 @@ const PostViewer = () => {
           />
           <Tags tags={tags} />
         </PostHead>
-        <PostActionButtons />
+        {checkOwnPost && <PostActionButtons setDoEdit={setDoEdit} />}
         <PostContent dangerouslySetInnerHTML={{ __html: body }}></PostContent>
       </PostWrapper>
     </PostViewerBlock>

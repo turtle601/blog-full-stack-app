@@ -11,8 +11,7 @@ import PostItem from './PostItem';
 import { RightAlign } from '../../layout/flexbox';
 
 // utils 관련
-import { buildLink, extractQuery } from '../../utils/queryLink';
-import { useLocation, useParams } from 'react-router-dom';
+import { buildLink } from '../../utils/queryLink';
 
 const PostListBlock = styled.div`
   width: 100%;

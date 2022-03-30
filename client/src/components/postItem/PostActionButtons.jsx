@@ -22,10 +22,14 @@ const PostActionButtonsBlock = styled(Flex)`
 const PostUpdateButton = styled(LinkButton)``;
 const PostDeleteButton = styled(LinkButton)``;
 
-const PostActionButtons = () => {
+const PostActionButtons = ({ setDoEdit }) => {
+  const onEdit = () => {
+    setDoEdit();
+  };
+
   return (
     <PostActionButtonsBlock>
-      <PostUpdateButton to="#" color="cyan">
+      <PostUpdateButton to="/write" color="cyan" onClick={onEdit}>
         수정
       </PostUpdateButton>
       <PostDeleteButton to="#" color="cyan">

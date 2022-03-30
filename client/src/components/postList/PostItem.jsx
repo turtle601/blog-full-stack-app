@@ -40,7 +40,11 @@ const PostItem = ({ post }) => {
   return (
     <PostItemBlock>
       <PostItemTitle>
-        <LinkButton $noButton to={`/@${user.username}/${_id}`}>
+        <LinkButton
+          $textColor="gray"
+          $noButton
+          to={`/@${user.username}/${_id}`}
+        >
           {title}
         </LinkButton>
       </PostItemTitle>
