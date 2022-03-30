@@ -11,7 +11,8 @@ import PostItem from './PostItem';
 import { RightAlign } from '../../layout/flexbox';
 
 // utils 관련
-import { buildLink } from '../../utils/queryLink';
+import { buildLink, extractQuery } from '../../utils/queryLink';
+import { useLocation, useParams } from 'react-router-dom';
 
 const PostListBlock = styled.div`
   width: 100%;
@@ -61,7 +62,7 @@ const PostList = () => {
   // 쿼리 별 데이터를 가져오도록 하기 위해서
   useEffect(() => {
     setPostList();
-  }, []);
+  }, [setPostList]);
 
   if (error) {
     return (

@@ -1,6 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
+import { usePostList } from '../../hooks/postList';
 import LinkButton from './LinkButton';
+
+// util 관련
+import { buildLink } from '../../utils/queryLink';
 
 const TagList = styled.ul`
   display: flex;
@@ -34,7 +38,7 @@ const Tags = ({ tags }) => {
       {tags.map(tag => {
         return (
           <TagItem key={tag}>
-            <LinkButton to={`/?tags=${tag}`} $noButton>
+            <LinkButton to={`/?tag=${tag}`} $noButton>
               #{tag}
             </LinkButton>
           </TagItem>
