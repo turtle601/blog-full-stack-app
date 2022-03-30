@@ -10,11 +10,12 @@ export const usePostList = () => {
   const { username } = useParams();
   const { search } = useLocation();
   const dispatch = useDispatch();
-  const { posts, error, loading, userInfo } = useSelector(
+  const { posts, error, loading, userInfo, lastPage } = useSelector(
     ({ loadingReducer, listReducer, userReducer }) => {
       return {
         posts: listReducer.posts,
         error: listReducer.error,
+        lastPage: listReducer.lastPage,
         loading: loadingReducer['postList/LIST_POST'],
         userInfo: userReducer.user,
       };
@@ -22,13 +23,25 @@ export const usePostList = () => {
   );
 
   // qs 라이브러리 => tag와 page값 알기
-  const { tag, page } = qs.parse(search, {
+  const { tag, page = 1 } = qs.parse(search, {
     ignoreQueryPrefix: true,
   });
 
   const setPostList = useCallback(() => {
     dispatch(listPost({ page, username, tag }));
-  }, [listPost]);
+  }, [search, listPost, dispatch, tag, page, username]);
 
-  return [{ posts, error, loading, userInfo }, setPostList];
+  return [
+    {
+      posts,
+      error,
+      loading,
+      userInfo,
+      lastPage,
+      tag,
+      page: parseInt(page, 10),
+      username,
+    },
+    setPostList,
+  ];
 };

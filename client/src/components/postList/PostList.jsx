@@ -10,6 +10,10 @@ import PostItem from './PostItem';
 // layout 관련
 import { RightAlign } from '../../layout/flexbox';
 
+// utils 관련
+import { buildLink, extractQuery } from '../../utils/queryLink';
+import { useLocation, useParams } from 'react-router-dom';
+
 const PostListBlock = styled.div`
   width: 100%;
   display: flex;
@@ -40,12 +44,25 @@ const WriteButton = styled(LinkButton)`
   }}
 `;
 
+const PageNationBlock = styled.div`
+  display: flex;
+  justify-content: space-around;
+  ${({ theme }) => {
+    return css`
+      margin-bottom: ${theme.space[12]};
+    `;
+  }}
+`;
+
 const PostList = () => {
-  const [{ posts, error, loading, userInfo }, setPostList] = usePostList();
+  const [
+    { posts, error, loading, userInfo, lastPage, tag, page, username },
+    setPostList,
+  ] = usePostList();
   // 쿼리 별 데이터를 가져오도록 하기 위해서
   useEffect(() => {
     setPostList();
-  }, []);
+  }, [setPostList]);
 
   if (error) {
     return (
@@ -54,7 +71,6 @@ const PostList = () => {
       </PostListBlock>
     );
   }
-
   return (
     <PostListBlock>
       <PostListWrapper>
@@ -72,6 +88,36 @@ const PostList = () => {
               return <PostItem key={post._id} post={post} />;
             })}
         </PostItemList>
+
+        <PageNationBlock>
+          {page === 1 ? (
+            <LinkButton $disabled to="#">
+              이전
+            </LinkButton>
+          ) : (
+            <LinkButton
+              to={buildLink({ username, tag, page: page - 1 })}
+              color="gray"
+            >
+              이전
+            </LinkButton>
+          )}
+
+          <p>{page}</p>
+
+          {page === lastPage ? (
+            <LinkButton $disabled to="#">
+              다음
+            </LinkButton>
+          ) : (
+            <LinkButton
+              to={buildLink({ username, tag, page: page + 1 })}
+              color="gray"
+            >
+              다음
+            </LinkButton>
+          )}
+        </PageNationBlock>
       </PostListWrapper>
     </PostListBlock>
   );

@@ -19,6 +19,10 @@ const StyledButton = styled.button`
       &:hover {
         background-color: ${theme.color.gray[200]};
       }
+
+      &:disabled {
+        cursor: not-allowed;
+      }
     `;
   }}
 

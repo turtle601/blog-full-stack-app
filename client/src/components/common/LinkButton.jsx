@@ -74,6 +74,18 @@ const StyledLink = styled(Link)`
       `
     );
   }}
+
+  ${props => {
+    return (
+      props.$disabled &&
+      css`
+        cursor: not-allowed;
+        pointer-events: none;
+        background-color: ${props.theme.color.gray[300]};
+        color: ${props.theme.color.gray[500]};
+      `
+    );
+  }}
 `;
 
 const LinkButton = ({ ...rest }) => {
