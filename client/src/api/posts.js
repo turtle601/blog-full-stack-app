@@ -25,3 +25,8 @@ export const listPost = async ({ page, username, tag }) => {
 export const updatePost = async ({ id, title, body, tags }) => {
   return await client.patch(`/api/posts/${id}`, { title, body, tags });
 };
+
+// 포스트 삭제
+export const deletePost = async id => {
+  return await client.delete(`/api/posts/${id}`);
+};

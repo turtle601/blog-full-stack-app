@@ -7,6 +7,9 @@ import LinkButton from '../common/LinkButton';
 // layout 관련
 import { Flex } from '../../layout/flexbox';
 
+// api 관련
+import { deletePost } from '../../api/posts';
+
 const PostActionButtonsBlock = styled(Flex)`
   justify-content: flex-end;
   ${({ theme }) => {
@@ -22,7 +25,7 @@ const PostActionButtonsBlock = styled(Flex)`
 const PostUpdateButton = styled(LinkButton)``;
 const PostDeleteButton = styled(LinkButton)``;
 
-const PostActionButtons = ({ setDoEdit }) => {
+const PostActionButtons = ({ setDoEdit, onRemove }) => {
   const onEdit = () => {
     setDoEdit();
   };
@@ -32,7 +35,7 @@ const PostActionButtons = ({ setDoEdit }) => {
       <PostUpdateButton to="/write" color="cyan" onClick={onEdit}>
         수정
       </PostUpdateButton>
-      <PostDeleteButton to="#" color="cyan">
+      <PostDeleteButton to="/" color="cyan" onClick={onRemove}>
         삭제
       </PostDeleteButton>
     </PostActionButtonsBlock>

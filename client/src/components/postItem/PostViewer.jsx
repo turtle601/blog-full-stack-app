@@ -13,6 +13,9 @@ import SubInfo from '../common/SubInfo';
 import Tags from '../common/Tags';
 import PostActionButtons from './PostActionButtons';
 
+// api 관련
+import { deletePost } from '../../api/posts';
+
 const PostViewerBlock = styled.div`
   width: 100%;
 
@@ -87,8 +90,15 @@ const PostViewer = () => {
     return null;
   }
 
-  const { title, body, user, publishedDate, tags } = post;
+  const { title, body, user, publishedDate, tags, _id } = post;
+
+  // 작성자 = 수정 작성자 일치 여부 확인
   const checkOwnPost = (user && user._id) === (ownUser && ownUser._id);
+
+  // 포스트 삭제 기능
+  const onRemove = async () => {
+    await deletePost(_id);
+  };
 
   return (
     <PostViewerBlock>
@@ -102,7 +112,9 @@ const PostViewer = () => {
           />
           <Tags tags={tags} />
         </PostHead>
-        {checkOwnPost && <PostActionButtons setDoEdit={setDoEdit} />}
+        {checkOwnPost && (
+          <PostActionButtons setDoEdit={setDoEdit} onRemove={onRemove} />
+        )}
         <PostContent dangerouslySetInnerHTML={{ __html: body }}></PostContent>
       </PostWrapper>
     </PostViewerBlock>
