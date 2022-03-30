@@ -12,7 +12,7 @@ posts.post('/', postCtrl.write);
 // posts/{id}
 const post = new Router();
 
-post.get('/', checkLogin, postCtrl.read);
+post.get('/', postCtrl.read);
 post.delete('/', checkLogin, postCtrl.checkOwnPost, postCtrl.remove);
 post.patch('/', checkLogin, postCtrl.checkOwnPost, postCtrl.update);
 
