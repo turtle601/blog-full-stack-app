@@ -2,7 +2,7 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 
 // Component 관련
-import Button from './Button';
+import LinkButton from './LinkButton';
 
 // layout 관련
 import { Center, Flex } from '../../layout/flexbox';
@@ -52,25 +52,29 @@ const AskModalButtonGroup = styled(Flex)`
   ${({ theme }) => {
     return css`
       margin-top: ${theme.space[16]};
-      button + button {
+      a + a {
         margin-left: ${theme.space[4]};
       }
     `;
   }}
 `;
 
-const CancelButton = styled(Button)``;
-const DeleteButton = styled(Button)``;
+const CancelButton = styled(LinkButton)``;
+const DeleteButton = styled(LinkButton)``;
 
-const AskModal = () => {
+const AskModal = ({ doCancel, doRemove }) => {
   return (
     <FullScreen>
       <AskModalBlock>
         <AskModalTitle>포스트 삭제</AskModalTitle>
         <AskModalBody>정말로 삭제 하시겠습니까?</AskModalBody>
         <AskModalButtonGroup>
-          <CancelButton color="cyan">취소</CancelButton>
-          <DeleteButton color="red">삭제</DeleteButton>
+          <CancelButton to="#" onClick={doCancel} color="cyan">
+            취소
+          </CancelButton>
+          <DeleteButton to="/" onClick={doRemove} color="red">
+            삭제
+          </DeleteButton>
         </AskModalButtonGroup>
       </AskModalBlock>
     </FullScreen>
