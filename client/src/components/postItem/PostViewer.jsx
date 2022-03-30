@@ -11,6 +11,10 @@ import { usePostViewer } from '../../hooks/read';
 import Responsive from '../common/Responsive';
 import SubInfo from '../common/SubInfo';
 import Tags from '../common/Tags';
+import PostActionButtons from './PostActionButtons';
+
+// api 관련
+import { deletePost } from '../../api/posts';
 
 const PostViewerBlock = styled.div`
   width: 100%;
@@ -60,29 +64,41 @@ const PostContent = styled.div`
 `;
 
 const PostViewer = () => {
-  const [{ post, error, loading }, setReadPost, setUnloadPost] =
-    usePostViewer();
+  const [
+    { post, error, loading, ownUser },
+    setReadPost,
+    setUnloadPost,
+    setDoEdit,
+  ] = usePostViewer();
 
   useEffect(() => {
     setReadPost();
     return () => {
       setUnloadPost(); // 언마운트될 때 리덕스에서 없애기
     };
-  }, []);
+  }, [setReadPost, setUnloadPost]);
 
   if (error) {
     if (error.response && error.response.status === 404) {
       return <PostViewerBlock> 존재하지 않는 포스트입니다. </PostViewerBlock>;
     }
 
-    return <PostViewerBlock>오류 발생!</PostViewerBlock>;
+    return <PostViewerBlock> 오류 발생! </PostViewerBlock>;
   }
 
   if (loading || !post) {
     return null;
   }
 
-  const { title, body, user, publishedDate, tags } = post;
+  const { title, body, user, publishedDate, tags, _id } = post;
+
+  // 작성자 = 수정 작성자 일치 여부 확인
+  const checkOwnPost = (user && user._id) === (ownUser && ownUser._id);
+
+  // 포스트 삭제 기능
+  const onRemove = async () => {
+    await deletePost(_id);
+  };
 
   return (
     <PostViewerBlock>
@@ -96,6 +112,9 @@ const PostViewer = () => {
           />
           <Tags tags={tags} />
         </PostHead>
+        {checkOwnPost && (
+          <PostActionButtons setDoEdit={setDoEdit} onRemove={onRemove} />
+        )}
         <PostContent dangerouslySetInnerHTML={{ __html: body }}></PostContent>
       </PostWrapper>
     </PostViewerBlock>

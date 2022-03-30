@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { writePost } from '../stores/write';
+import { writePost, updatePost } from '../stores/write';
 
 export const useWrittenState = () => {
   const dispatch = useDispatch();
@@ -11,10 +11,23 @@ export const useWrittenState = () => {
     tags: writeReducer.tags,
     post: writeReducer.post,
     postError: writeReducer.postError,
+    ownPost: writeReducer.ownPost,
   }));
 
   const setPublish = useCallback(() => {
-    const { title, body, tags, post, postError } = writtenPost;
+    const { title, body, tags, post, postError, ownPost } = writtenPost;
+    if (ownPost) {
+      dispatch(
+        updatePost({
+          id: ownPost,
+          title,
+          body,
+          tags,
+        }),
+      );
+      return;
+    }
+
     dispatch(
       writePost({
         title,
@@ -22,7 +35,7 @@ export const useWrittenState = () => {
         tags,
       }),
     );
-  });
+  }, [writtenPost]);
 
   return [writtenPost, setPublish];
 };

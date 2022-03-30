@@ -24,7 +24,7 @@ const StyledButton = styled(Button)`
 
 const WriteActionButtons = () => {
   const navigator = useNavigate();
-  const [{ title, body, tags, post, postError }, setPublish] =
+  const [{ title, body, tags, ownPost, post, postError }, setPublish] =
     useWrittenState();
 
   const onCancel = () => {
@@ -43,7 +43,7 @@ const WriteActionButtons = () => {
   return (
     <WriteActionButtonsBlock>
       <StyledButton color="cyan" onClick={setPublish}>
-        포스트 등록
+        포스트 {ownPost ? '수정' : '등록'}
       </StyledButton>
       <StyledButton onClick={onCancel}>취소</StyledButton>
     </WriteActionButtonsBlock>
