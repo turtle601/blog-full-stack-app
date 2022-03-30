@@ -80,6 +80,8 @@ const Editor = () => {
         setChangeField({ key: 'body', value: quill.root.innerHTML });
       }
     });
+
+    quillInstance.current.root.innerHTML = body;
   }, []);
 
   const onChangeTitle = e => {
