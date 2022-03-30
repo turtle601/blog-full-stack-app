@@ -11,6 +11,7 @@ import { usePostViewer } from '../../hooks/read';
 import Responsive from '../common/Responsive';
 import SubInfo from '../common/SubInfo';
 import Tags from '../common/Tags';
+import PostActionButtons from './PostActionButtons';
 
 const PostViewerBlock = styled.div`
   width: 100%;
@@ -96,6 +97,7 @@ const PostViewer = () => {
           />
           <Tags tags={tags} />
         </PostHead>
+        <PostActionButtons />
         <PostContent dangerouslySetInnerHTML={{ __html: body }}></PostContent>
       </PostWrapper>
     </PostViewerBlock>

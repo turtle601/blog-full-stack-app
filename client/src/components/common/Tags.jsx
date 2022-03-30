@@ -38,7 +38,7 @@ const Tags = ({ tags }) => {
       {tags.map(tag => {
         return (
           <TagItem key={tag}>
-            <LinkButton to={`/?tag=${tag}`} $noButton>
+            <LinkButton to={`/?tag=${tag}`} $noButton $textColor="cyan">
               #{tag}
             </LinkButton>
           </TagItem>
