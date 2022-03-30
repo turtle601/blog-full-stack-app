@@ -8,6 +8,9 @@ const CHANGE_FIELD = 'write/CHANGE_FIELD';
 const [WRITE_POST, WRITE_POST_SUCCESS, WRITE_POST_FAILURE] =
   createAPIRequestType('write/WRITE_POST');
 
+const [UPDATE_POST, UPDATE_POST_SUCCESS, UPDATE_POST_FAILURE] =
+  createAPIRequestType('write/UPDATE_POST');
+
 const SET_ORIGINAL_POST = 'wrtie/SET_ORIGINAL_POST';
 
 // actions
@@ -20,6 +23,16 @@ export const writePost = createAction(WRITE_POST, ({ title, body, tags }) => ({
   body,
   tags,
 }));
+
+export const updatePost = createAction(
+  UPDATE_POST,
+  ({ id, title, body, tags }) => ({
+    id,
+    title,
+    body,
+    tags,
+  }),
+);
 
 // 초기 state
 const initialState = {
@@ -54,14 +67,29 @@ const writeReducer = handleActions(
       post: null,
       postError: null,
     }),
+
     [WRITE_POST_SUCCESS]: (state, { payload: post }) => ({
       ...state,
       post,
     }),
+
     [WRITE_POST_FAILURE]: (state, { payload: postError }) => ({
       ...state,
       postError,
     }),
+
+    [UPDATE_POST_SUCCESS]: (state, { payload: post }) => {
+      return {
+        ...state,
+        post,
+      };
+    },
+    [UPDATE_POST_FAILURE]: (state, { payload: postError }) => {
+      return {
+        ...state,
+        postError,
+      };
+    },
   },
   initialState,
 );

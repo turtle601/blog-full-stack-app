@@ -20,3 +20,8 @@ export const listPost = async ({ page, username, tag }) => {
   });
   return await client.get(`/api/posts/?${queryString}`);
 };
+
+// 포스트 수정
+export const updatePost = async ({ id, title, body, tags }) => {
+  return await client.patch(`/api/posts/${id}`, { title, body, tags });
+};
