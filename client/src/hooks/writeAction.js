@@ -25,6 +25,7 @@ export const useWrittenState = () => {
           tags,
         }),
       );
+      return;
     }
 
     dispatch(

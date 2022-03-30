@@ -7,9 +7,6 @@ import LinkButton from '../common/LinkButton';
 // layout 관련
 import { Flex } from '../../layout/flexbox';
 
-// api 관련
-import { deletePost } from '../../api/posts';
-
 const PostActionButtonsBlock = styled(Flex)`
   justify-content: flex-end;
   ${({ theme }) => {
